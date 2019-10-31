@@ -8,7 +8,7 @@ import cz.ucl.logic.app.services.definition.IUserService;
 // TODO: Implement this
 public class CategoryService implements ICategoryService {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     public CategoryService(IUserService userService) {
         this.userService = userService;

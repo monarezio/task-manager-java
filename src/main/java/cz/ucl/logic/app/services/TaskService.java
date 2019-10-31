@@ -11,7 +11,7 @@ import cz.ucl.logic.app.services.definition.TasksOrder;
 // TODO: Implement this
 public class TaskService implements ITaskService {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     public TaskService(IUserService userService) {
         this.userService = userService;

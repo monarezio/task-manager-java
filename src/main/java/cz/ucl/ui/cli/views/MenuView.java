@@ -1,13 +1,10 @@
 package cz.ucl.ui.cli.views;
 
-import com.sun.tools.javac.util.ArrayUtils;
-import cz.ucl.ui.cli.menu.Menu;
 import cz.ucl.ui.definition.menu.IMenu;
 import cz.ucl.ui.definition.menu.IMenuOption;
 import cz.ucl.ui.definition.views.IMenuView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -8,7 +8,7 @@ import cz.ucl.logic.app.services.definition.IUserService;
 // TODO: Implement this
 public class TagService implements ITagService {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     public TagService(IUserService userService) {
         this.userService = userService;
