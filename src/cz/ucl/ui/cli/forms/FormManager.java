@@ -26,9 +26,14 @@ public class FormManager implements IFormManager {
 
     @Override
     public Map<String, String> processForm() {
-        // TODO
+        this.data.clear(); // TODO: Is this needed?
 
-        return new HashMap<>(data);
+        // TODO
+        for(IFormField field : this.form.getFormFields()) {
+            processField(field);
+        }
+
+        return this.data;
     }
 
     @Override
@@ -60,5 +65,32 @@ public class FormManager implements IFormManager {
                 isValid = false;
             }
         } while (!isValid);
+    }
+
+    @Override
+    public IForm getForm() {
+        return form;
+    }
+
+    @Override
+    public IUserInterface getUserInterface() {
+        return ui;
+    }
+
+    // TODO: When do I throw errors?
+
+    @Override
+    public int processNumericalInput(int userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        return userInput;
+    }
+
+    @Override
+    public String processTextualInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        return userInput;
+    }
+
+    @Override
+    public String processSecureInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        return userInput;
     }
 }

@@ -1,6 +1,6 @@
 package cz.ucl.logic.app.entities.definition;
 
-import cz.ucl.logic.app.entities.Task;
+// import cz.ucl.logic.app.entities.Task;
 
 public interface IUser extends ITaskOwner {
     int getId();

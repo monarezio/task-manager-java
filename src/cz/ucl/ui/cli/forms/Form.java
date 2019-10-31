@@ -16,10 +16,23 @@ public class Form implements IForm {
         this.fields = new ArrayList<>();
     }
 
-    // TODO
+    @Override
+    public IFormField[] getFormFields() {
+        return fields.toArray(new IFormField[fields.size()]);
+    }
+
+    @Override
+    public void addFormField(IFormField field) {
+        fields.add(field);
+    }
 
     @Override
     public String renderFormField(IFormField formField) {
         return menu.getParentInterface().getFormView().formatFormField(formField);
+    }
+
+    @Override
+    public boolean isForm() {
+        return true; // TODO: What?
     }
 }

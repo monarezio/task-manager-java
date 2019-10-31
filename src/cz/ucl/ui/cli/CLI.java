@@ -1,5 +1,6 @@
 package cz.ucl.ui.cli;
 
+import cz.ucl.logic.IAppLogic;
 import cz.ucl.logic.exceptions.AlreadyLoggedInException;
 import cz.ucl.logic.exceptions.EmailAddressAlreadyUsedException;
 import cz.ucl.logic.exceptions.InvalidCredentialsException;
@@ -9,14 +10,14 @@ import cz.ucl.ui.cli.views.*;
 import cz.ucl.ui.definition.forms.IForm;
 import cz.ucl.ui.definition.forms.IFormManager;
 import cz.ucl.ui.definition.menu.IMenu;
-import cz.ucl.logic.IAppLogic;
 import cz.ucl.ui.definition.menu.IMenuFactory;
 import cz.ucl.ui.definition.menu.IMenuOption;
 import cz.ucl.ui.definition.menu.MenuType;
 import cz.ucl.ui.definition.views.*;
 
 import java.io.Console;
-import java.util.*;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class CLI implements ICLI {
@@ -82,8 +83,7 @@ public class CLI implements ICLI {
         Console console = System.console();
         if (console != null) {
             return String.valueOf(console.readPassword(""));
-        }
-        else { // if secure input is not supported, fallback to the classic one
+        } else { // if secure input is not supported, fallback to the classic one
             return promptString();
         }
     }
@@ -108,7 +108,10 @@ public class CLI implements ICLI {
         if (fromMenu.getIdentifier().equals("main_menu")) {
             actionDashboard(fromMenu);
         }
-        // TODO
+
+        drawMessage(menuView.drawNewLine()); //TODO: Is this ok?
+        drawMessage("Co chcete udělat?");
+        drawMessage(menuView.drawOptions(fromMenu));
     }
     //endregion
 
@@ -157,6 +160,11 @@ public class CLI implements ICLI {
         }
     }
 
+    private IMenuOption handleOptions(IMenu currentMenu) {
+        int optionNumber = promptOption(currentMenu);
+        return currentMenu.getOptionForNumber(optionNumber);
+    }
+
     private IMenu handleMenuForOption(IMenu currentMenu, IMenuOption selectedOption) {
         IMenu nextMenu = selectedOption.getMenu();
 
@@ -166,6 +174,10 @@ public class CLI implements ICLI {
             nextMenu = handleUserMenuChange(currentMenu, nextMenu);
         }
 
+        return nextMenu;
+    }
+
+    private IMenu handleUserMenuChange(IMenu currentMenu, IMenu nextMenu) {
         return nextMenu;
     }
 
@@ -180,8 +192,6 @@ public class CLI implements ICLI {
 
         return nextMenu;
     }
-
-    // TODO
 
     private IMenu handleSystemMenuChange(IMenu currentMenu, IMenu nextMenu) {
         if (nextMenu.getType() == MenuType.SYSTEM_BACK) {
@@ -200,12 +210,17 @@ public class CLI implements ICLI {
         return nextMenu;
     }
 
-    // TODO
+    private Map<String, String> handleForm(IMenu currentMenu) {
+        return createFormManagerForMenu(currentMenu).processForm(); // TODO: Is this correct?
+    }
 
     //endregion
 
     //region Utilities
-    /** Checks if validOptions contains testedOption */
+
+    /**
+     * Checks if validOptions contains testedOption
+     */
     private boolean isValidOption(int testedOption, int[] validOptions) {
         return IntStream.of(validOptions).anyMatch(x -> x == testedOption);
     }
@@ -237,5 +252,51 @@ public class CLI implements ICLI {
         System.out.println(getMenuView().drawPrompt(message));
     }
     //endregion
+
+
+    @Override
+    public IAppLogic getLogic() {
+        return logic;
+    }
+
+    @Override
+    public IMenuFactory getMenuFactory() {
+        return menuFactory;
+    }
+
+    @Override
+    public IMenu getMainMenu() {
+        return menuFactory.createMainMenu(this); // TODO: Is this valid?
+    }
+
+    @Override
+    public String getWelcomeText() {
+        return "Vítejte v aplikaci Úkolovník 1.0!\n------------------------";
+    }
+
+    @Override
+    public ICategoryView getCategoryView() {
+        return categoryView;
+    }
+
+    @Override
+    public ITagView getTagView() {
+        return tagView;
+    }
+
+    @Override
+    public ITaskView getTaskView() {
+        return taskView;
+    }
+
+    @Override
+    public IFormView getFormView() {
+        return formView;
+    }
+
+    @Override
+    public IMenuView getMenuView() {
+        return menuView;
+    }
 }
 
