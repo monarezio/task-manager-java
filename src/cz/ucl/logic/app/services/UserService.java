@@ -9,6 +9,7 @@ import cz.ucl.logic.exceptions.NotLoggedInException;
 
 // TODO: Implement this
 public class UserService implements IUserService {
+
     @Override
     public void loginUser(String email, String password) throws AlreadyLoggedInException, InvalidCredentialsException {
 

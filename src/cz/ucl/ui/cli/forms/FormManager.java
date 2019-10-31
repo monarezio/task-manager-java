@@ -22,14 +22,11 @@ public class FormManager implements IFormManager {
         this.data = new HashMap<>();
     }
 
-    // TODO
-
     @Override
     public Map<String, String> processForm() {
         this.data.clear(); // TODO: Is this needed?
 
-        // TODO
-        for(IFormField field : this.form.getFormFields()) {
+        for (IFormField field : this.form.getFormFields()) {
             processField(field);
         }
 
@@ -81,16 +78,23 @@ public class FormManager implements IFormManager {
 
     @Override
     public int processNumericalInput(int userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
-        return userInput;
+        return userInput; //This is not called when input is empty.
     }
 
     @Override
     public String processTextualInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        throwExceptionIfRequiredAndEmpty(userInput, formField);
         return userInput;
     }
 
     @Override
     public String processSecureInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        throwExceptionIfRequiredAndEmpty(userInput, formField);
         return userInput;
+    }
+
+    private void throwExceptionIfRequiredAndEmpty(String userInput, IFormField formField) throws InvalidFieldValueException {
+        if (formField.getIsRequired() && userInput.isEmpty())
+            throw new InvalidFieldValueException("Field " + formField.getIdentifier() + " is required!");
     }
 }

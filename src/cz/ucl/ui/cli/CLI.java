@@ -67,7 +67,7 @@ public class CLI implements ICLI {
     //region Prompts
     @Override
     public int promptNumber() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // TODO: This should not be instanced twice
         while (!sc.hasNextInt()) sc.next();
         return sc.nextInt();
     }
@@ -109,9 +109,7 @@ public class CLI implements ICLI {
             actionDashboard(fromMenu);
         }
 
-        drawMessage(menuView.drawNewLine()); //TODO: Is this ok?
-        drawMessage("Co chcete udělat?");
-        drawMessage(menuView.drawOptions(fromMenu));
+        drawMessage(menuView.drawOptions(fromMenu)); // TODO Is it fine?
     }
     //endregion
 
@@ -147,6 +145,7 @@ public class CLI implements ICLI {
 
     //region Handlers
     public IMenu handleMenu(IMenu currentMenu) {
+        drawMessage(menuView.drawSeparator());
         drawMenu(currentMenu);
 
         invokeAppLogic(currentMenu);
@@ -162,7 +161,11 @@ public class CLI implements ICLI {
 
     private IMenuOption handleOptions(IMenu currentMenu) {
         int optionNumber = promptOption(currentMenu);
-        return currentMenu.getOptionForNumber(optionNumber);
+
+        if (isValidOption(optionNumber, currentMenu.getValidOptionNumbers()))
+            return currentMenu.getOptionForNumber(optionNumber);
+        else
+            return handleOptions(currentMenu); // I summon the tail rec god. TODO
     }
 
     private IMenu handleMenuForOption(IMenu currentMenu, IMenuOption selectedOption) {
@@ -271,7 +274,7 @@ public class CLI implements ICLI {
 
     @Override
     public String getWelcomeText() {
-        return "Vítejte v aplikaci Úkolovník 1.0!\n------------------------";
+        return "Vítejte v aplikaci Úkolovník 1.0!";
     }
 
     @Override

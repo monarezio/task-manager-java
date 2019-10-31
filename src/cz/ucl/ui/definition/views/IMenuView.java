@@ -7,12 +7,12 @@ import cz.ucl.ui.definition.menu.IMenuOption;
 /** Views are used only for formatting purposes. They are stateless. */
 public interface IMenuView {
     String formatMenuOption(IMenuOption option);
-    String formatMenu(Menu menu);
+    String formatMenu(IMenu menu);
 
-    String drawDescription(Menu menu);
+    String drawDescription(IMenu menu);
     String drawHeader(IMenu currentMenu);
     String drawSeparator();
-    String drawNewLine();
+    String  drawNewLine();
     String drawBreadcrumbs(IMenu currentMenu);
     String drawOptions(IMenu currentMenu);
     String drawMessage(String message);

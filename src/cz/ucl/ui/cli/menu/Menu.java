@@ -22,7 +22,7 @@ public abstract class Menu implements IMenu {
 
     protected IUserInterface ui;
     protected IAppLogic logic;
-    protected IMenu parentMenu;
+    private IMenu parentMenu;
 
     public Menu(IMenu parentMenu, String identifier, String title) {
         if (parentMenu != null) {
@@ -97,18 +97,20 @@ public abstract class Menu implements IMenu {
 
     @Override
     public int nextOptionNumber() {
-        return options.size() + 1; // TODO: Is this enough?
+        return options.size() + 1;
     }
 
     @Override
     public String render() {
+
         StringBuilder sb = new StringBuilder("Nacházíte se v menu: "); // TODO: Use the IMenuView methods?
         sb.append(title);
+        sb.append("\n");
         sb.append("\n");
         sb.append(description);
         sb.append("\n");
 
-        return  sb.toString();
+        return ui.getMenuView().formatMenu(this); //sb.toString(); //
     }
 
     @Override
