@@ -9,7 +9,7 @@ import java.util.Objects;
 
 abstract public class TaskOwner implements ITaskOwner {
 
-    private List<ITask> tasks;
+    private final List<ITask> tasks;
 
     protected TaskOwner(ITask[] tasks) {
         this.tasks = Arrays.asList(tasks);

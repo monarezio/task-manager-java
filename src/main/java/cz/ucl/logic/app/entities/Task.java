@@ -9,17 +9,20 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-public class Task implements ITask {
+public final class Task implements ITask {
+
     private final int id;
     private final String title;
     private final String note;
     private final LocalDate created;
     private final LocalDate updated;
+    private boolean isDone;
+
     private final IUser user;
+
     private final ICategory category;
 
-    private List<ITag> tags;
-    private boolean isDone;
+    private final List<ITag> tags;
 
     public Task(int id, String title, String note, LocalDate created, LocalDate updated, IUser user, ICategory category, ITag[] tags, boolean isDone) {
         this.id = id;

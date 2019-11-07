@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLiteDialect</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:task_manager.sqlite</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="show_sql">true</property>
+
+        <mapping class="cz.ucl.logic.data.dao.UserDAO"/>
+        <mapping class="cz.ucl.logic.data.dao.TaskDAO"/>
+        <mapping class="cz.ucl.logic.data.dao.CategoryDAO"/>
+        <mapping class="cz.ucl.logic.data.dao.TagDAO"/>
+    </session-factory>
+</hibernate-configuration>
