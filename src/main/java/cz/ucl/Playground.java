@@ -1,7 +1,6 @@
 package cz.ucl;
 
-import cz.ucl.logic.app.entities.User;
-import cz.ucl.logic.app.entities.definition.IUser;
+import cz.ucl.logic.data.dao.UserDAO;
 import cz.ucl.logic.data.hibernate.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,8 +11,15 @@ public class Playground {
 
     public static void main(String[] args) {
 
-        IUser user = new User("samuel@kodytek.cz", "samuel.kodytek", "hesloJeVeslo123");
-        IUser user2 = new User("tomas@novy.cz", "tomas.novy", "pes");
+        UserDAO user = new UserDAO();
+        user.setUsername("samuel");
+        user.setEmail("samuel@kodytek.cz");
+        user.setPassword("hesloJeVeslo");
+
+        UserDAO user2 = new UserDAO();
+        user2.setUsername("tomas");
+        user2.setEmail("tomas@gmail.com");
+        user2.setPassword("password");
 
         Transaction transaction = null;
 
@@ -36,7 +42,7 @@ public class Playground {
         }
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<User> students = session.createQuery("from User", User.class).list();
+            List<UserDAO> students = session.createQuery("from UserDAO", UserDAO.class).list();
             students.forEach(s -> System.out.println(s.getEmail()));
         } catch (Exception e) {
             e.printStackTrace();

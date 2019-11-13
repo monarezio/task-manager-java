@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(schema = "abc")
 public final class TaskDAO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String title;
     private String note;
@@ -25,4 +26,71 @@ public final class TaskDAO {
     @ManyToMany
     private List<TagDAO> tags;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
+    public LocalDate getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDate updated) {
+        this.updated = updated;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public UserDAO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDAO user) {
+        this.user = user;
+    }
+
+    public CategoryDAO getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDAO category) {
+        this.category = category;
+    }
+
+    public List<TagDAO> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagDAO> tags) {
+        this.tags = tags;
+    }
 }
