@@ -1,18 +1,21 @@
 package cz.ucl.logic.data.dao;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(schema = "abc")
 public final class CategoryDAO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    private long id;
+    @Column(nullable = false)
     private String title;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private ColorDAO color;
 
     @ManyToOne
@@ -21,7 +24,13 @@ public final class CategoryDAO {
     @OneToMany
     private List<TaskDAO> tasks;
 
-    public int getId() {
+    @Column(nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private LocalDateTime updated = LocalDateTime.now();
+
+    public long getId() {
         return id;
     }
 
@@ -55,5 +64,21 @@ public final class CategoryDAO {
 
     public void setTasks(List<TaskDAO> tasks) {
         this.tasks = tasks;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 }

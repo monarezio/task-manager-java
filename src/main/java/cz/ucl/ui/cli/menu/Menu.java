@@ -152,4 +152,8 @@ public abstract class Menu implements IMenu {
     public boolean isForm() {
         return false; // TODO: How do I know is this is a form?
     }
+
+    protected void clearOptions() {
+        options.clear();
+    }
 }

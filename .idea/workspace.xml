@@ -2,7 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc2e6eee-1724-4301-a4b1-58b0957d6d56" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/validators/FieldValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/validators/definition/IValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/hibernate/HibernateSessionFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/hibernate/OpenedSessionFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/hibernate/definitions/IHibernateSessionFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/CategoryManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/TagManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/UserManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/definitions/ICategoryManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/definitions/ITagManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/definitions/IUserManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/DAOToEntity/CategoryDAOToCategoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/DAOToEntity/ColorDAOToColorMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/DAOToEntity/TagDAOToTagMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/DAOToEntity/TaskDAOToTaskMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/DAOToEntity/UserDAOToUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/DAOToEntity/ICategoryDAOToCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/DAOToEntity/IColorDAOToColorMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/DAOToEntity/ITagDAOToTagMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/DAOToEntity/ITaskDAOToTaskMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/DAOToEntity/IUserDAOToUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/IMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/entityToDAO/IColorToColorDAOMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/definitions/entityToDAO/IUserToUserDAOMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/entityToDAO/ColorToColorDAOMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/mappers/entityToDAO/UserToUserDAOMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/exceptions/InvalidColorException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/exceptions/InvalidPropertyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/SettingsMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagDetailMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagsMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/AddTaskMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/AllTasksMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/FinishedTaskMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/NotFinishedTasksMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -11,17 +45,43 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/log4j2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/Playground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/Playground.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ICategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ICategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ITag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ITag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ITask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/ITask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/entities/definition/IUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/definition/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/definition/ITagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/definition/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/app/services/definition/IUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/CategoryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/TagDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/TagDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/TaskDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/TaskDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/hibernate/HibernateUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/manager/CategoryManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/CLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/forms/FormField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/forms/FormField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/forms/FormManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/forms/FormManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/FormMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/FormMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/MenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/MenuFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/FormView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/FormView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/MenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/MenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/TagView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/TagView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/definition/menu/IMenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/definition/menu/IMenuFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task_manager.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,8 +160,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -135,7 +196,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Playground">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cz.ucl.Main" />
       <module name="task-manager.main" />
@@ -183,9 +244,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Gradle.task-manager-gradle [dependencies]" />
         <item itemvalue="Application.Playground" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -193,37 +254,7 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@6059f8b9" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7979eadb" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7d1e03fc" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@63a6dd22" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fae69c73" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@50896c42" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -247,6 +278,16 @@
       <workItem from="1573038646901" duration="127000" />
       <workItem from="1573234806940" duration="2276000" />
       <workItem from="1573551030616" duration="5096000" />
+      <workItem from="1573664902281" duration="3012000" />
+      <workItem from="1573739032697" duration="10000" />
+      <workItem from="1573741000849" duration="4292000" />
+      <workItem from="1573801877803" duration="4776000" />
+      <workItem from="1574084275447" duration="302000" />
+      <workItem from="1574086165828" duration="215000" />
+      <workItem from="1574149826399" duration="1965000" />
+      <workItem from="1574151908677" duration="8976000" />
+      <workItem from="1574175033134" duration="781000" />
+      <workItem from="1574355118378" duration="41292000" />
     </task>
     <servers />
   </component>
@@ -265,5 +306,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/hibernate/HibernateSessionFactory.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

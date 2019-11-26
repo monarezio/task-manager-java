@@ -3,7 +3,7 @@ package cz.ucl.logic.app.entities.definition;
 // import cz.ucl.logic.app.entities.Task;
 
 public interface IUser extends ITaskOwner {
-    int getId();
+    long getId();
     String getEmail();
     String getUsername();
     String getPassword();

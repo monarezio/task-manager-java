@@ -1,11 +1,12 @@
 package cz.ucl.logic.app.entities.definition;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public interface ITask {
     //region Getters
-    int getId();
+    long getId();
 
     String getTitle();
 
@@ -17,9 +18,9 @@ public interface ITask {
 
     ICategory getCategory();
 
-    LocalDate getCreatedAt(); // TODO: Changed Date to LocalDate, is it ok?
+    LocalDateTime getCreatedAt();
 
-    LocalDate getUpdatedAt();
+    LocalDateTime getUpdatedAt();
     //endregion
 
     //region Tags

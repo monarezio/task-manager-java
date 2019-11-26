@@ -5,21 +5,30 @@ import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.app.entities.definition.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 
 final public class User extends TaskOwner implements IUser {
 
-    private final int id;
+    private final long id;
 
+    @NotNull
     private final String password;
+
+    @Email
+    @NotNull
     private final String email;
+
+    @NotNull
     private final String username;
 
     private final List<ICategory> categories;
     private final List<ITag> tags;
 
-    public User(int id, String email, String username, String password, ICategory[] categories, ITag[] tags, ITask[] tasks) {
+    public User(long id, String email, String username, String password, ICategory[] categories, ITag[] tags, ITask[] tasks) {
         super(tasks);
         this.id = id;
         this.email = email;
@@ -33,8 +42,12 @@ final public class User extends TaskOwner implements IUser {
         this(0, email, username, password, new ICategory[0], new ITag[0], new ITask[0]);
     }
 
+    public User(String email) {
+        this(email, null, null);
+    }
+
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 

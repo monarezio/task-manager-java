@@ -1,9 +1,8 @@
 package cz.ucl.ui.cli;
 
 import cz.ucl.logic.IAppLogic;
-import cz.ucl.logic.exceptions.AlreadyLoggedInException;
-import cz.ucl.logic.exceptions.EmailAddressAlreadyUsedException;
-import cz.ucl.logic.exceptions.InvalidCredentialsException;
+import cz.ucl.logic.app.entities.definition.Color;
+import cz.ucl.logic.exceptions.*;
 import cz.ucl.ui.cli.forms.FormManager;
 import cz.ucl.ui.cli.menu.MenuFactory;
 import cz.ucl.ui.cli.views.*;
@@ -64,10 +63,12 @@ public class CLI implements ICLI {
     }
     //endregion
 
+    //private final static Scanner sc = new Scanner(System.in);  // TODO: This should not be instanced twice
+
     //region Prompts
     @Override
     public int promptNumber() {
-        Scanner sc = new Scanner(System.in); // TODO: This should not be instanced twice
+        Scanner sc = new Scanner(System.in);
         while (!sc.hasNextInt()) sc.next();
         return sc.nextInt();
     }
@@ -100,6 +101,12 @@ public class CLI implements ICLI {
             actionLogin(fromMenu, formData);
         } else if (fromMenu.getIdentifier().equals("register")) {
             actionRegister(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("add_tag")) {
+            actionAddTag(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("tag_delete")) {
+            actionDeleteTag(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("tag_detail_form")) {
+            actionDetailTag(fromMenu, formData);
         }
         // TODO
     }
@@ -126,7 +133,7 @@ public class CLI implements ICLI {
         try {
             logic.loginUser(data.get("email"), data.get("password"));
             drawMessage("Přihlášení proběhlo úspěšně");
-        } catch (AlreadyLoggedInException | InvalidCredentialsException e) {
+        } catch (AlreadyLoggedInException | InvalidCredentialsException | InvalidPropertyException e) {
             drawError(e.getMessage());
         }
     }
@@ -135,7 +142,36 @@ public class CLI implements ICLI {
         try {
             logic.registerUser(data.get("email"), data.get("username"), data.get("password"));
             drawMessage("Registrace proběhla úspěšně");
-        } catch (EmailAddressAlreadyUsedException e) {
+        } catch (InvalidPropertyException | EmailAddressAlreadyUsedException e) {
+            drawError(e.getMessage());
+        }
+    }
+
+    private void actionAddTag(IMenu menu, Map<String, String> data) {
+        try {
+            Color color = Color.valueOf(data.get("color").toUpperCase());
+            logic.createTag(data.get("title"), color);
+            drawMessage("Přidání tagu proběhlo úspěšně");
+        } catch (IllegalArgumentException e) {
+            drawError("Entered color is not valid.");
+        } catch (InvalidColorException e) {
+            drawError(e.getMessage());
+        }
+    }
+
+    private void actionDeleteTag(IMenu menu, Map<String, String> data) {
+        try {
+            logic.destroyTag(Integer.parseInt(data.get("tag_id")));
+        } catch (Exception e) {
+            drawError(e.getMessage());
+        }
+    }
+
+    private void actionDetailTag(IMenu menu, Map<String, String> data) {
+        try {
+
+            Integer.parseInt(data.get("tag_id"));
+        } catch (Exception e) {
             drawError(e.getMessage());
         }
     }

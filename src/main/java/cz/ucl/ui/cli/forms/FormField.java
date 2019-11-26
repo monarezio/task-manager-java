@@ -20,8 +20,12 @@ public class FormField implements IFormField {
 
     private boolean isRequired;
 
+    public FormField(String identifier, String title, FormFieldType type, boolean isRequired) {
+        this(identifier, title, "Prosím zadejte " + title.toLowerCase(), type, isRequired);
+    }
+
     public FormField(String identifier, String title, FormFieldType type) {
-        this(identifier, title, "Prosím zadejte " + title.toLowerCase(), type, true);
+        this(identifier, title, type, true);
     }
 
     @Override

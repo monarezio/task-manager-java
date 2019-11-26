@@ -1,10 +1,7 @@
 package cz.ucl.logic.app.services.definition;
 
 import cz.ucl.logic.app.entities.definition.IUser;
-import cz.ucl.logic.exceptions.AlreadyLoggedInException;
-import cz.ucl.logic.exceptions.EmailAddressAlreadyUsedException;
-import cz.ucl.logic.exceptions.InvalidCredentialsException;
-import cz.ucl.logic.exceptions.NotLoggedInException;
+import cz.ucl.logic.exceptions.*;
 
 /**
  * This interface describes a class which should contain all application logic related to user
@@ -12,7 +9,7 @@ import cz.ucl.logic.exceptions.NotLoggedInException;
  */
 public interface IUserService {
     /** Allows user to login (AppLogin will remember which user is logged in) */
-    void loginUser(String email, String password) throws AlreadyLoggedInException, InvalidCredentialsException;
+    void loginUser(String email, String password) throws AlreadyLoggedInException, InvalidCredentialsException, InvalidPropertyException;
 
     /** Allows user to logout from the system */
     void logoutUser() throws NotLoggedInException;
@@ -20,7 +17,7 @@ public interface IUserService {
     /** Allows user to register into the system
      *  This method will not login the registered user. After registration, user has to login by the loginUser(...) method
      */
-    void registerUser(String email, String username, String password) throws EmailAddressAlreadyUsedException;
+    void registerUser(String email, String username, String password) throws EmailAddressAlreadyUsedException, InvalidPropertyException;
 
     /** Returns true if there is a user logged into the system, false othewise
      *  When this method returns true, the userLoggedIn() method should not return null

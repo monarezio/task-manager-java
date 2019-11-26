@@ -11,4 +11,9 @@ public abstract class FormMenu extends Menu {
 
     /** This method should be used for definition of form fields */
     protected abstract void defineForm();
+
+    @Override
+    public boolean isForm() {
+        return true;
+    }
 }

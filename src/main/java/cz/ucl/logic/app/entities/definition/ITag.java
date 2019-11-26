@@ -1,7 +1,7 @@
 package cz.ucl.logic.app.entities.definition;
 
 public interface ITag extends ITaskOwner {
-    int getId();
+    long getId();
     IUser getUser();
     String getTitle();
     Color getColor();

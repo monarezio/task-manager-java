@@ -1,22 +1,25 @@
 package cz.ucl.logic.data.dao;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(schema = "abc")
 public final class UserDAO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    @Column(nullable = false)
+    private long id;
 
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String username;
 
     @OneToMany
@@ -28,7 +31,20 @@ public final class UserDAO {
     @OneToMany
     private List<TaskDAO> tasks;
 
-    public int getId() {
+    @Column(nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private LocalDateTime updated = LocalDateTime.now();
+
+    public UserDAO() {
+    }
+
+    public UserDAO(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -78,6 +94,22 @@ public final class UserDAO {
 
     public void setTasks(List<TaskDAO> tasks) {
         this.tasks = tasks;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
 }

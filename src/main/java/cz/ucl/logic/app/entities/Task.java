@@ -5,26 +5,41 @@ import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.app.entities.definition.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 public final class Task implements ITask {
 
-    private final int id;
+    private final long id;
+
+    @NotNull
+    @Size(min = 1)
     private final String title;
+
+    @NotNull
+    @Size(min = 1)
     private final String note;
-    private final LocalDate created;
-    private final LocalDate updated;
+
+    @NotNull
+    private final LocalDateTime created;
+
+    @NotNull
+    private final LocalDateTime updated;
+
     private boolean isDone;
 
+    @NotNull
     private final IUser user;
 
     private final ICategory category;
 
     private final List<ITag> tags;
 
-    public Task(int id, String title, String note, LocalDate created, LocalDate updated, IUser user, ICategory category, ITag[] tags, boolean isDone) {
+    public Task(long id, String title, String note, LocalDateTime created, LocalDateTime updated, IUser user, ICategory category, ITag[] tags, boolean isDone) {
         this.id = id;
         this.title = title;
         this.note = note;
@@ -37,7 +52,7 @@ public final class Task implements ITask {
     }
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -67,12 +82,12 @@ public final class Task implements ITask {
     }
 
     @Override
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return created;
     }
 
     @Override
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updated;
     }
 

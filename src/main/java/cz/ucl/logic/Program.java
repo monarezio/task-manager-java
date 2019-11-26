@@ -10,28 +10,62 @@ import cz.ucl.logic.app.services.TagService;
 import cz.ucl.logic.app.services.TaskService;
 import cz.ucl.logic.app.services.UserService;
 import cz.ucl.logic.app.services.definition.*;
-import cz.ucl.logic.exceptions.AlreadyLoggedInException;
-import cz.ucl.logic.exceptions.EmailAddressAlreadyUsedException;
-import cz.ucl.logic.exceptions.InvalidCredentialsException;
-import cz.ucl.logic.exceptions.NotLoggedInException;
+import cz.ucl.logic.app.validators.FieldValidator;
+import cz.ucl.logic.app.validators.definition.IValidator;
+import cz.ucl.logic.data.hibernate.HibernateSessionFactory;
+import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
+import cz.ucl.logic.data.managers.TagManager;
+import cz.ucl.logic.data.managers.UserManager;
+import cz.ucl.logic.data.managers.definitions.ITagManager;
+import cz.ucl.logic.data.managers.definitions.IUserManager;
+import cz.ucl.logic.data.mappers.DAOToEntity.*;
+import cz.ucl.logic.data.mappers.definitions.DAOToEntity.*;
+import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
+import cz.ucl.logic.data.mappers.definitions.entityToDAO.IUserToUserDAOMapper;
+import cz.ucl.logic.data.mappers.entityToDAO.ColorToColorDAOMapper;
+import cz.ucl.logic.data.mappers.entityToDAO.UserToUserDAOMapper;
+import cz.ucl.logic.exceptions.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-/** This class HAS to honor the Facade design pattern!
- *
- *  No direct functionality should be present!
- *  All functionality should be delegated to service classes
- *
- *  All xxxService attributes have to be private!
+import javax.validation.Validation;
+
+/**
+ * This class HAS to honor the Facade design pattern!
+ * <p>
+ * No direct functionality should be present!
+ * All functionality should be delegated to service classes
+ * <p>
+ * All xxxService attributes have to be private!
  */
 public class Program implements IAppLogic {
-    private ICategoryService categoryService;
-    private ITagService tagService;
-    private ITaskService taskService;
-    private IUserService userService;
+    private final ICategoryService categoryService;
+    private final ITagService tagService;
+    private final ITaskService taskService;
+    private final IUserService userService;
+
+    private final IColorDAOToColorMapper colorDAOToColorMapper = ColorDAOToColorMapper.instance;
+    private final ICategoryDAOToCategory categoryDAOToCategory = CategoryDAOToCategoryMapper.instance;
+    private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
+    private final ITagDAOToTagMapper tagDAOToTagMapper = TagDAOToTagMapper.instance;
+    private final IUserDAOToUserMapper userDAOToUserMapper = UserDAOToUserMapper.instance;
+
+    private final IUserToUserDAOMapper userToUserDAOMapper = UserToUserDAOMapper.instance;
+    private final IColorToColorDAOMapper colorToColorDAOMapper = ColorToColorDAOMapper.instance;
+
+    private final IHibernateSessionFactory hibernateSessionFactory = new HibernateSessionFactory();
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    private final IUserManager userManager = new UserManager(userDAOToUserMapper, userToUserDAOMapper, hibernateSessionFactory);
+    private final ITagManager tagManager = new TagManager(tagDAOToTagMapper, colorToColorDAOMapper, hibernateSessionFactory);
+
+    private final IValidator fieldValidator = new FieldValidator(
+            Validation.buildDefaultValidatorFactory().getValidator()
+    );
 
     public Program() {
-        userService = new UserService();
+        userService = new UserService(userManager, bCryptPasswordEncoder, fieldValidator);
         categoryService = new CategoryService(userService);
-        tagService = new TagService(userService);
+        tagService = new TagService(userService, tagManager);
         taskService = new TaskService(userService);
     }
 
@@ -86,7 +120,7 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void createTag(String title, Color color) {
+    public void createTag(String title, Color color) throws InvalidColorException {
         tagService.createTag(title, color);
     }
 
@@ -166,7 +200,7 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void loginUser(String email, String password) throws AlreadyLoggedInException, InvalidCredentialsException {
+    public void loginUser(String email, String password) throws AlreadyLoggedInException, InvalidCredentialsException, InvalidPropertyException {
         userService.loginUser(email, password);
     }
 
@@ -176,7 +210,7 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void registerUser(String email, String username, String password) throws EmailAddressAlreadyUsedException {
+    public void registerUser(String email, String username, String password) throws EmailAddressAlreadyUsedException, InvalidPropertyException {
         userService.registerUser(email, username, password);
     }
 

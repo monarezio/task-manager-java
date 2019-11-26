@@ -2,19 +2,33 @@ package cz.ucl.logic.data.dao;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(schema = "abc")
 public final class TaskDAO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    @Column(nullable = false)
+    private long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String note;
-    private LocalDate created = LocalDate.now();
-    private LocalDate updated;
+
+    @Column(nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private LocalDateTime updated = LocalDateTime.now();
+
+    @Column(nullable = true)
+    private LocalDate deadline;
+
+    @Column(nullable = false)
     private boolean isDone;
 
     @ManyToOne
@@ -26,7 +40,7 @@ public final class TaskDAO {
     @ManyToMany
     private List<TagDAO> tags;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -46,19 +60,19 @@ public final class TaskDAO {
         this.note = note;
     }
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDate updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 

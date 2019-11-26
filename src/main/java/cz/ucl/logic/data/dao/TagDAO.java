@@ -3,20 +3,24 @@ package cz.ucl.logic.data.dao;
 import cz.ucl.logic.app.entities.definition.Color;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(schema = "abc")
 public final class TagDAO {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    @Column(nullable = false)
+    private long id;
 
+    @Column(nullable = false)
     private String title;
 
     @Enumerated(EnumType.STRING)
-    private Color color;
+    @Column(nullable = true)
+    private ColorDAO color;
 
     @ManyToOne
     private UserDAO user;
@@ -24,7 +28,20 @@ public final class TagDAO {
     @OneToMany
     private List<TaskDAO> tasks;
 
-    public int getId() {
+    @Column(nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private LocalDateTime updated = LocalDateTime.now();
+
+    public TagDAO() {
+    }
+
+    public TagDAO(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -36,11 +53,11 @@ public final class TagDAO {
         this.title = title;
     }
 
-    public Color getColor() {
+    public ColorDAO getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(ColorDAO color) {
         this.color = color;
     }
 
@@ -58,5 +75,21 @@ public final class TagDAO {
 
     public void setTasks(List<TaskDAO> tasks) {
         this.tasks = tasks;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 }

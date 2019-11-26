@@ -95,7 +95,7 @@ public class MenuView implements IMenuView {
 
     @Override
     public String drawError(String message) {
-        return message;
+        return "There was/were few error/s: " + message;
     }
 
     @Override

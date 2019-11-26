@@ -2,6 +2,7 @@ package cz.ucl.logic.app.services.definition;
 
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ITag;
+import cz.ucl.logic.exceptions.InvalidColorException;
 
 /**
  * This interface describes a class which should contain all application logic related to tags
@@ -18,7 +19,7 @@ public interface ITagService {
     void createTag(String title);
 
     /** Creates a tag with title and color */
-    void createTag(String title, Color color);
+    void createTag(String title, Color color) throws InvalidColorException;
 
     /** Finds a tag by its ID and updates it */
     void updateTag(int id, String title, Color color);

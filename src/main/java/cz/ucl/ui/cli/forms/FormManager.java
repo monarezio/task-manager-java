@@ -40,7 +40,8 @@ public class FormManager implements IFormManager {
 
         do {
             isValid = true;
-            System.out.print(form.renderFormField(formField));
+            String abc = form.renderFormField(formField);
+            System.out.println(abc);
 
             try {
                 if (formField.getType() == FormFieldType.TEXTUAL) {

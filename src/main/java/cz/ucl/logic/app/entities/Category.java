@@ -6,18 +6,24 @@ import cz.ucl.logic.app.entities.definition.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public final class Category extends TaskOwner implements ICategory {
 
-    private final int id;
+    private final long id;
+
+    @NotNull
+    @Size(min = 1)
     private final String title;
 
     private final Color color;
 
+    @NotNull
     private final IUser user;
 
-    public Category(int id, IUser user, String title, Color color, ITask[] tasks) {
+    public Category(long id, IUser user, String title, Color color, ITask[] tasks) {
         super(tasks);
         this.id = id;
         this.user = user;
@@ -26,7 +32,7 @@ public final class Category extends TaskOwner implements ICategory {
     }
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 
