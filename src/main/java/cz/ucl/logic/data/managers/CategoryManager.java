@@ -81,7 +81,7 @@ public class CategoryManager implements ICategoryManager {
         hibernateSessionFactory.createSession(s -> {
             result.set(
                     categoryDaoToCategory.mapOrNull(
-                            s.createQuery("from CategoryDOA where id = ?0 AND user_id = ?1", CategoryDAO.class)
+                            s.createQuery("from CategoryDAO where id = ?0 AND user_id = ?1", CategoryDAO.class)
                                     .setParameter(0, categoryId)
                                     .setParameter(1, userId)
                                     .getSingleResult()

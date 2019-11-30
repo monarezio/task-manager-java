@@ -18,6 +18,7 @@ public class SettingsMenu extends Menu {
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tagsMenu));
+        addOption(new MenuOption(nextOptionNumber(), categoriesMenu));
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }
 }

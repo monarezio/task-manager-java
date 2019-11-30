@@ -1,6 +1,5 @@
 package cz.ucl.ui.cli.menu;
 
-import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.ui.cli.forms.FormField;
@@ -8,10 +7,7 @@ import cz.ucl.ui.cli.menu.system.BackMenu;
 import cz.ucl.ui.cli.menu.system.FillFormMenu;
 import cz.ucl.ui.cli.menu.system.QuitMenu;
 import cz.ucl.ui.cli.menu.user.settings.SettingsMenu;
-import cz.ucl.ui.cli.menu.user.settings.categories.CategoriesRootMenu;
-import cz.ucl.ui.cli.menu.user.settings.categories.CategoryAddFormMenu;
-import cz.ucl.ui.cli.menu.user.settings.categories.CategoryDeleteActionMenu;
-import cz.ucl.ui.cli.menu.user.settings.categories.CategoryDetailMenu;
+import cz.ucl.ui.cli.menu.user.settings.categories.*;
 import cz.ucl.ui.cli.menu.user.settings.tags.*;
 import cz.ucl.ui.cli.menu.user.tasks.AddTaskMenu;
 import cz.ucl.ui.cli.menu.user.tasks.AllTasksMenu;
@@ -22,9 +18,6 @@ import cz.ucl.ui.definition.IUserInterface;
 import cz.ucl.ui.definition.forms.FormFieldType;
 import cz.ucl.ui.definition.menu.IMenu;
 import cz.ucl.ui.definition.menu.IMenuFactory;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MenuFactory implements IMenuFactory {
     @Override
@@ -147,7 +140,7 @@ public class MenuFactory implements IMenuFactory {
 
     @Override
     public IMenu createCategoriesRootMenu(IMenu parentMenu) {
-        return new CategoriesRootMenu(parentMenu, "Nastavení Category");
+        return new CategoriesRootMenu(parentMenu, "Nastavení Kategorie");
     }
 
     @Override
@@ -162,16 +155,16 @@ public class MenuFactory implements IMenuFactory {
 
     @Override
     public IMenu createCategoryListMenu(IMenu parentMenu) {
-        return null;
+        return new CategoriesListMenu(parentMenu, "Seznam všech kategorií");
     }
 
     @Override
-    public IMenu createEditCategoryMenu(IMenu parentMenu, int tagId) {
-        return null;
+    public IMenu createEditCategoryMenu(IMenu parentMenu, int categoryId) {
+        return new CategoryEditFormMenu(parentMenu, "Upravit kateogrii", categoryId);
     }
 
     @Override
-    public IMenu createDeleteCategoryMenu(IMenu parentMenu, int tagId) {
-        return null;
+    public IMenu createDeleteCategoryMenu(IMenu parentMenu, int categoryId) {
+        return new CategoryDeleteActionMenu(parentMenu, "Smazat kateogrii", categoryId);
     }
 }

@@ -105,6 +105,12 @@ public class CLI implements ICLI {
         } else if (fromMenu.getIdentifier().equals("edit_tag")) {
             TagEditFormMenu fm = (TagEditFormMenu) fromMenu;
             actionEditTag(fromMenu, formData, fm.getTagId());
+        } else if (fromMenu.getIdentifier().equals("add_category")) {
+            actionAddCategory(fromMenu, formData);
+        } else try {
+            throw new Exception("NOT IMPLEMENTED");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         // TODO
     }
@@ -166,18 +172,14 @@ public class CLI implements ICLI {
         }
     }
 
-    private void actionDeleteTag(IMenu menu, Map<String, String> data) {
+    private void actionAddCategory(IMenu menu, Map<String, String> data) {
         try {
-            logic.destroyTag(Integer.parseInt(data.get("tag_id")));
-        } catch (Exception e) {
-            drawError(e.getMessage());
-        }
-    }
-
-    private void actionDetailTag(IMenu menu, Map<String, String> data) {
-        try {
-            Integer.parseInt(data.get("tag_id"));
-        } catch (Exception e) {
+            Color color = Color.valueOf(data.get("color").toUpperCase());
+            logic.createCategory(data.get("title"), color);
+            drawMessage("Přidání kategorie proběhlo úspěšně");
+        } catch (IllegalArgumentException e) {
+            drawError("Entered color is not valid.");
+        } catch (InvalidColorException e) {
             drawError(e.getMessage());
         }
     }

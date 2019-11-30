@@ -14,7 +14,11 @@ public class TagsListMenu extends Menu {
     protected void build() {
         ITag[] tags = logic.getAllTags();
 
-        setDescription("Seznam všech uživatelských tagů.");
+        StringBuilder sb = new StringBuilder("Seznam všech uživatelských tagů.");
+        if(tags.length == 0)
+            sb.append("\n\nSeznam tagů je prázdný");
+
+        setDescription(sb.toString());
 
         for (ITag tag : tags) {
             IMenu tagDetailMenu = ui.getMenuFactory().createTagDetailMenu(this, tag);

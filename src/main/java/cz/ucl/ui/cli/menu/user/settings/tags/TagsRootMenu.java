@@ -18,13 +18,11 @@ public class TagsRootMenu extends Menu {
 
         IMenu tagsListMenu = ui.getMenuFactory().createTagsListMenu(this);
         IMenu addTagForm = ui.getMenuFactory().createAddTagFormMenu(this);
-        //IMenu deleteTagForm = ui.getMenuFactory().createDeleteTagFormMenu(this); TODO: Maybe in the future
 
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tagsListMenu));
         addOption(new MenuOption(nextOptionNumber(), addTagForm));
-        //addOption(new MenuOption(nextOptionNumber(), deleteTagForm));
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }
 }

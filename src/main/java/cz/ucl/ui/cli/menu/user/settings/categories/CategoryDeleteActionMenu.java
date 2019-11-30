@@ -6,8 +6,8 @@ import cz.ucl.ui.definition.menu.IMenu;
 public class CategoryDeleteActionMenu extends ActionMenu {
     private int categoryId;
 
-    public CategoryDeleteActionMenu(IMenu parentMenu, String identifier, String title, int categoryId) {
-        super(parentMenu, identifier, title, parentMenu.getParentMenu()); // TODO: fix targetMenu
+    public CategoryDeleteActionMenu(IMenu parentMenu, String title, int categoryId) {
+        super(parentMenu, "delete_category", title, parentMenu.getParentMenu()); // TODO: fix targetMenu
         this.categoryId = categoryId;
     }
 
