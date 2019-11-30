@@ -7,7 +7,6 @@ import cz.ucl.logic.app.services.definition.IUserService;
 import cz.ucl.logic.data.managers.definitions.ITagManager;
 import cz.ucl.logic.exceptions.InvalidColorException;
 
-// TODO: Implement this
 public class TagService implements ITagService {
 
     private final IUserService userService;
@@ -25,7 +24,7 @@ public class TagService implements ITagService {
 
     @Override
     public ITag getTagById(int id) {
-        return null;
+        return tagManager.getTagForUserById(userService.getUserLoggedIn().getId(), id);
     }
 
     @Override
@@ -40,6 +39,7 @@ public class TagService implements ITagService {
 
     @Override
     public void updateTag(int id, String title, Color color) {
+        tagManager.updateTag(id, title, color);
     }
 
     @Override

@@ -11,6 +11,16 @@ public class CategoryView implements ICategoryView {
 
     @Override
     public String formatCategory(ICategory category) {
-        return null;
+        StringBuilder sb = new StringBuilder("Detail tagu:\n");
+        sb.append("ID: ");
+        sb.append(category.getId());
+        sb.append("\n");
+        sb.append("Název: ");
+        sb.append(category.getTitle());
+        sb.append("\n");
+        sb.append("Barva: ");
+        sb.append(category.getColor());
+
+        return sb.toString();
     }
 }

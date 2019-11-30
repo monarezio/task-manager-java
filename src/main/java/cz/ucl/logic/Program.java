@@ -14,8 +14,10 @@ import cz.ucl.logic.app.validators.FieldValidator;
 import cz.ucl.logic.app.validators.definition.IValidator;
 import cz.ucl.logic.data.hibernate.HibernateSessionFactory;
 import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
+import cz.ucl.logic.data.managers.CategoryManager;
 import cz.ucl.logic.data.managers.TagManager;
 import cz.ucl.logic.data.managers.UserManager;
+import cz.ucl.logic.data.managers.definitions.ICategoryManager;
 import cz.ucl.logic.data.managers.definitions.ITagManager;
 import cz.ucl.logic.data.managers.definitions.IUserManager;
 import cz.ucl.logic.data.mappers.DAOToEntity.*;
@@ -57,6 +59,7 @@ public class Program implements IAppLogic {
 
     private final IUserManager userManager = new UserManager(userDAOToUserMapper, userToUserDAOMapper, hibernateSessionFactory);
     private final ITagManager tagManager = new TagManager(tagDAOToTagMapper, colorToColorDAOMapper, hibernateSessionFactory);
+    private final ICategoryManager categoryManager = new CategoryManager(hibernateSessionFactory, categoryDAOToCategory, colorToColorDAOMapper);
 
     private final IValidator fieldValidator = new FieldValidator(
             Validation.buildDefaultValidatorFactory().getValidator()
@@ -64,7 +67,7 @@ public class Program implements IAppLogic {
 
     public Program() {
         userService = new UserService(userManager, bCryptPasswordEncoder, fieldValidator);
-        categoryService = new CategoryService(userService);
+        categoryService = new CategoryService(userService, categoryManager);
         tagService = new TagService(userService, tagManager);
         taskService = new TaskService(userService);
     }
@@ -85,12 +88,12 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void createCategory(String title) {
+    public void createCategory(String title) throws InvalidColorException {
         categoryService.createCategory(title);
     }
 
     @Override
-    public void createCategory(String title, Color color) {
+    public void createCategory(String title, Color color) throws InvalidColorException {
         categoryService.createCategory(title, color);
     }
 

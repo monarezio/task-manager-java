@@ -81,11 +81,24 @@ public class TagManager implements ITagManager {
         hibernateSessionFactory.createSession(s -> {
             result.set(
                     tagDAOToTagMapper.mapOrNull(
-                            s.createQuery("from TagDAO where tag_id = ?0 AND user_id = ?0", TagDAO.class)
+                            s.createQuery("from TagDAO where id = ?0 AND user_id = ?1", TagDAO.class)
+                                    .setParameter(0, tagId)
+                                    .setParameter(1, userId)
                                     .getSingleResult()
                     )
             );
         });
         return result.get();
+    }
+
+    @Override
+    public void updateTag(long id, String title, Color color) {
+        hibernateSessionFactory.createSession(s -> {
+            TagDAO tag = s.get(TagDAO.class, id);
+            tag.setColor(colorToColorDAOMapper.mapOrNull(color));
+            tag.setTitle(title);
+
+            s.update(tag);
+        });
     }
 }

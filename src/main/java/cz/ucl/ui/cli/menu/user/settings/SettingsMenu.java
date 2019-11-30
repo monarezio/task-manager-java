@@ -13,7 +13,8 @@ public class SettingsMenu extends Menu {
     protected void build() {
         setDescription("Uživatelské nastavení.");
 
-        IMenu tagsMenu = ui.getMenuFactory().createTagsMenu(this);
+        IMenu tagsMenu = ui.getMenuFactory().createTagsRootMenu(this);
+        IMenu categoriesMenu = ui.getMenuFactory().createCategoriesRootMenu(this);
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tagsMenu));

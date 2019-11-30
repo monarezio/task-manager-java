@@ -30,6 +30,13 @@ public final class CategoryDAO {
     @Column(nullable = false)
     private LocalDateTime updated = LocalDateTime.now();
 
+    public CategoryDAO() {
+    }
+
+    public CategoryDAO(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

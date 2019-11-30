@@ -9,7 +9,7 @@ public class TagDetailMenu extends Menu {
 
     private int tagId;
 
-    public TagDetailMenu(IMenu parentMenu, String title, int tagId) {
+    public TagDetailMenu(IMenu parentMenu, String title, int tagId) { //TODO: Pass the fetched tag already?
         super(parentMenu, "tag_detail", title);
         this.tagId = tagId;
     }
@@ -17,19 +17,17 @@ public class TagDetailMenu extends Menu {
     @Override
     protected void build() {
         ITag tag = logic.getTagById(tagId);
+        setDescription(ui.getTagView().formatTag(tag));
 
-        StringBuilder sb = new StringBuilder("Detail tagu:\n");
-        sb.append("ID: ");
-        sb.append(tag.getId());
-        sb.append("Název: ");
-        sb.append(tag.getTitle());
-        sb.append("Barva: ");
-        sb.append(tag.getColor());
+        IMenu editMenu = ui.getMenuFactory().createEditTagMenu(this, tagId);
+        addOption(new MenuOption(nextOptionNumber(), editMenu));
 
-        setDescription(sb.toString());
+        IMenu deleteMenu = ui.getMenuFactory().createDeleteTagMenu(this, tagId);
+        addOption(new MenuOption(nextOptionNumber(), deleteMenu));
 
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
         addOption(new MenuOption(nextOptionNumber(), backMenu));
+
     }
 
     @Override

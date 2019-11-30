@@ -5,15 +5,14 @@ import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.exceptions.*;
 import cz.ucl.ui.cli.forms.FormManager;
 import cz.ucl.ui.cli.menu.MenuFactory;
+import cz.ucl.ui.cli.menu.user.settings.tags.TagEditFormMenu;
 import cz.ucl.ui.cli.views.*;
 import cz.ucl.ui.definition.forms.IForm;
 import cz.ucl.ui.definition.forms.IFormManager;
-import cz.ucl.ui.definition.menu.IMenu;
-import cz.ucl.ui.definition.menu.IMenuFactory;
-import cz.ucl.ui.definition.menu.IMenuOption;
-import cz.ucl.ui.definition.menu.MenuType;
+import cz.ucl.ui.definition.menu.*;
 import cz.ucl.ui.definition.views.*;
 
+import javax.swing.*;
 import java.io.Console;
 import java.util.Map;
 import java.util.Scanner;
@@ -103,10 +102,9 @@ public class CLI implements ICLI {
             actionRegister(fromMenu, formData);
         } else if (fromMenu.getIdentifier().equals("add_tag")) {
             actionAddTag(fromMenu, formData);
-        } else if (fromMenu.getIdentifier().equals("tag_delete")) {
-            actionDeleteTag(fromMenu, formData);
-        } else if (fromMenu.getIdentifier().equals("tag_detail_form")) {
-            actionDetailTag(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("edit_tag")) {
+            TagEditFormMenu fm = (TagEditFormMenu) fromMenu;
+            actionEditTag(fromMenu, formData, fm.getTagId());
         }
         // TODO
     }
@@ -159,6 +157,15 @@ public class CLI implements ICLI {
         }
     }
 
+    private void actionEditTag(IMenu menu, Map<String, String> data, int tagId) {
+        try {
+            Color color = Color.valueOf(data.get("color").toUpperCase());
+            logic.updateTag(tagId, data.get("title"), color);
+        } catch (Exception e) {
+            drawError(e.getMessage());
+        }
+    }
+
     private void actionDeleteTag(IMenu menu, Map<String, String> data) {
         try {
             logic.destroyTag(Integer.parseInt(data.get("tag_id")));
@@ -169,7 +176,6 @@ public class CLI implements ICLI {
 
     private void actionDetailTag(IMenu menu, Map<String, String> data) {
         try {
-
             Integer.parseInt(data.get("tag_id"));
         } catch (Exception e) {
             drawError(e.getMessage());
@@ -242,6 +248,10 @@ public class CLI implements ICLI {
         } else if (nextMenu.getType() == MenuType.SYSTEM_QUIT) {
             // we will close the application with status code 0 (OK) instead of rendering the menu
             System.exit(0);
+        } else if(nextMenu.getType() == MenuType.SYSTEM_ACTION && nextMenu instanceof ActionMenu){
+            ActionMenu actionMenu = (ActionMenu) nextMenu;
+             actionMenu.action();
+            nextMenu = actionMenu.getTargetMenu();
         } else {
             throw new RuntimeException(nextMenu.getType() + " is not valid type of system menu ");
         }

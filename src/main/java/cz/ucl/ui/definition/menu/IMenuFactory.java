@@ -1,5 +1,7 @@
 package cz.ucl.ui.definition.menu;
 
+import cz.ucl.logic.app.entities.definition.ICategory;
+import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.ui.definition.IUserInterface;
 
 public interface IMenuFactory {
@@ -17,9 +19,17 @@ public interface IMenuFactory {
     IMenu createAddTaskMenu(IMenu parentMenu);
     IMenu createSettingsMenu(IMenu parentMenu);
 
-    IMenu createTagsMenu(IMenu parentMenu);
+    IMenu createTagsRootMenu(IMenu parentMenu);
     IMenu createAddTagFormMenu(IMenu parentMenu);
-    IMenu createDeleteTagFormMenu(IMenu parentMenu);
-    IMenu createTagDetailMenuForm(IMenu parentMenu);
-    IMenu createTagDetailMenu(IMenu parentMenu, int tagId);
+    IMenu createTagDetailMenu(IMenu parentMenu, ITag tag);
+    IMenu createTagsListMenu(IMenu parentMenu);
+    IMenu createEditTagMenu(IMenu parentMenu, int tagId);
+    IMenu createDeleteTagMenu(IMenu parentMenu, int tagId);
+
+    IMenu createCategoriesRootMenu(IMenu parentMenu);
+    IMenu createAddCategoryFormMenu(IMenu parentMenu);
+    IMenu createCategoryDetailMenu(IMenu parentMenu, ICategory category);
+    IMenu createCategoryListMenu(IMenu parentMenu);
+    IMenu createEditCategoryMenu(IMenu parentMenu, int tagId);
+    IMenu createDeleteCategoryMenu(IMenu parentMenu, int tagId);
 }
