@@ -13,7 +13,6 @@ public interface IMenuFactory {
     IMenu createLoginFormMenu(IMenu parentMenu);
     IMenu createRegistrationFormMenu(IMenu parentMenu);
 
-    IMenu createAllTasksMenu(IMenu parentMenu);
     IMenu createNotFinishedTasksMenu(IMenu parentMenu);
     IMenu createFinishedTasksMenu(IMenu parentMenu);
     IMenu createAddTaskMenu(IMenu parentMenu);
@@ -32,4 +31,8 @@ public interface IMenuFactory {
     IMenu createCategoryListMenu(IMenu parentMenu);
     IMenu createEditCategoryMenu(IMenu parentMenu, int tagId);
     IMenu createDeleteCategoryMenu(IMenu parentMenu, int tagId);
+
+    IMenu createTasksRootMenu(IMenu parentMenu);
+    IMenu createTasksListMenu(IMenu parentMenu);
+    IMenu createAddTaskFormMenu(IMenu parentMenu);
 }

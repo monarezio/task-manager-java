@@ -10,17 +10,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/logic/data/managers/CategoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/CLI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/MenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/MenuFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/SettingsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/SettingsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoriesListMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoriesListMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoriesRootMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoriesRootMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoryDeleteActionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoryDeleteActionMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoryEditMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/categories/CategoryEditFormMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagsListMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagsListMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/MainMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagsRootMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/settings/tags/TagsRootMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/CategoryView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/views/CategoryView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/AddTaskMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/AddTaskMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/AllTasksMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/cli/menu/user/tasks/TasksListMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/definition/menu/IMenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/ucl/ui/definition/menu/IMenuFactory.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -201,17 +197,7 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ac7e778" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@ac7e778" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3c659100" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -246,7 +232,7 @@
       <workItem from="1574175033134" duration="781000" />
       <workItem from="1574355118378" duration="41292000" />
       <workItem from="1575014189333" duration="670000" />
-      <workItem from="1575128004829" duration="15765000" />
+      <workItem from="1575128004829" duration="18643000" />
     </task>
     <servers />
   </component>

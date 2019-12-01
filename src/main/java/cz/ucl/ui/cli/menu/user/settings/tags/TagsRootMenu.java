@@ -1,11 +1,8 @@
 package cz.ucl.ui.cli.menu.user.settings.tags;
 
-import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.ui.cli.menu.Menu;
 import cz.ucl.ui.cli.menu.MenuOption;
 import cz.ucl.ui.definition.menu.IMenu;
-
-import java.util.Arrays;
 
 public class TagsRootMenu extends Menu {
     public TagsRootMenu(IMenu parentMenu, String title) {

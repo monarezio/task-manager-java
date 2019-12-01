@@ -5,6 +5,7 @@ import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.exceptions.*;
 import cz.ucl.ui.cli.forms.FormManager;
 import cz.ucl.ui.cli.menu.MenuFactory;
+import cz.ucl.ui.cli.menu.user.settings.categories.CategoryEditFormMenu;
 import cz.ucl.ui.cli.menu.user.settings.tags.TagEditFormMenu;
 import cz.ucl.ui.cli.views.*;
 import cz.ucl.ui.definition.forms.IForm;
@@ -107,6 +108,9 @@ public class CLI implements ICLI {
             actionEditTag(fromMenu, formData, fm.getTagId());
         } else if (fromMenu.getIdentifier().equals("add_category")) {
             actionAddCategory(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("edit_category")) {
+            CategoryEditFormMenu fm = (CategoryEditFormMenu) fromMenu;
+            actionEditCategory(fromMenu, formData, fm.getCategoryId());
         } else try {
             throw new Exception("NOT IMPLEMENTED");
         } catch (Exception e) {
@@ -184,6 +188,15 @@ public class CLI implements ICLI {
         }
     }
 
+    private void actionEditCategory(IMenu menu, Map<String, String> data, int categoryId) {
+        try {
+            Color color = Color.valueOf(data.get("color").toUpperCase());
+            logic.updateCategory(categoryId, data.get("title"), color);
+        } catch (Exception e) {
+            drawError(e.getMessage());
+        }
+    }
+
     // TODO
     //endregion
 
@@ -250,9 +263,9 @@ public class CLI implements ICLI {
         } else if (nextMenu.getType() == MenuType.SYSTEM_QUIT) {
             // we will close the application with status code 0 (OK) instead of rendering the menu
             System.exit(0);
-        } else if(nextMenu.getType() == MenuType.SYSTEM_ACTION && nextMenu instanceof ActionMenu){
+        } else if (nextMenu.getType() == MenuType.SYSTEM_ACTION && nextMenu instanceof ActionMenu) {
             ActionMenu actionMenu = (ActionMenu) nextMenu;
-             actionMenu.action();
+            actionMenu.action();
             nextMenu = actionMenu.getTargetMenu();
         } else {
             throw new RuntimeException(nextMenu.getType() + " is not valid type of system menu ");

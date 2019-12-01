@@ -9,11 +9,8 @@ import cz.ucl.ui.cli.menu.system.QuitMenu;
 import cz.ucl.ui.cli.menu.user.settings.SettingsMenu;
 import cz.ucl.ui.cli.menu.user.settings.categories.*;
 import cz.ucl.ui.cli.menu.user.settings.tags.*;
-import cz.ucl.ui.cli.menu.user.tasks.AddTaskMenu;
-import cz.ucl.ui.cli.menu.user.tasks.AllTasksMenu;
-import cz.ucl.ui.cli.menu.user.tasks.FinishedTaskMenu;
+import cz.ucl.ui.cli.menu.user.tasks.*;
 import cz.ucl.ui.cli.menu.user.MainMenu;
-import cz.ucl.ui.cli.menu.user.tasks.NotFinishedTasksMenu;
 import cz.ucl.ui.definition.IUserInterface;
 import cz.ucl.ui.definition.forms.FormFieldType;
 import cz.ucl.ui.definition.menu.IMenu;
@@ -83,11 +80,6 @@ public class MenuFactory implements IMenuFactory {
                 addOption(new MenuOption(nextOptionNumber(), fillMenu));
             }
         };
-    }
-
-    @Override
-    public IMenu createAllTasksMenu(IMenu parentMenu) {
-        return new AllTasksMenu(parentMenu, "Zobrazit seznam všech úkolů");
     }
 
     @Override
@@ -166,5 +158,20 @@ public class MenuFactory implements IMenuFactory {
     @Override
     public IMenu createDeleteCategoryMenu(IMenu parentMenu, int categoryId) {
         return new CategoryDeleteActionMenu(parentMenu, "Smazat kateogrii", categoryId);
+    }
+
+    @Override
+    public IMenu createTasksRootMenu(IMenu parentMenu) {
+        return new TasksRootMenu(parentMenu, "Seznam úkolů");
+    }
+
+    @Override
+    public IMenu createTasksListMenu(IMenu parentMenu) {
+        return new TasksListMenu(parentMenu, "Zobrazit seznam všech úkolů");
+    }
+
+    @Override
+    public IMenu createAddTaskFormMenu(IMenu parentMenu) {
+        return new AddTaskMenu(parentMenu, "Přidat úkol");
     }
 }
