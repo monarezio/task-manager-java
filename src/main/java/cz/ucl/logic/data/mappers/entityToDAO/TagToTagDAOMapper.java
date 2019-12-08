@@ -2,14 +2,18 @@ package cz.ucl.logic.data.mappers.entityToDAO;
 
 import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.data.dao.TagDAO;
+import cz.ucl.logic.data.mappers.definitions.IMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.ITagToTagDAOMapper;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
 
-public class TagToTagDAOMapper implements ITagToTagDAOMapper {
+final public class TagToTagDAOMapper implements ITagToTagDAOMapper {
 
-    public final static ITagToTagDAOMapper instance = new TagToTagDAOMapper();
+    private final IMapperFactory factory;
 
-    private final IColorToColorDAOMapper colorToColorDAOMapper = ColorToColorDAOMapper.instance;
+    public TagToTagDAOMapper(IMapperFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public TagDAO mapOrNull(ITag v) {
@@ -17,7 +21,7 @@ public class TagToTagDAOMapper implements ITagToTagDAOMapper {
 
         TagDAO tagDAO = new TagDAO(v.getId());
         tagDAO.setTitle(v.getTitle());
-        tagDAO.setColor(colorToColorDAOMapper.mapOrNull(v.getColor()));
+        tagDAO.setColor(factory.getColorToColorDaoMapper().mapOrNull(v.getColor()));
 
         return tagDAO;
     }

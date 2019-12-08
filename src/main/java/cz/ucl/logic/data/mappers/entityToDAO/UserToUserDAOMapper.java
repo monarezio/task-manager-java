@@ -6,9 +6,7 @@ import cz.ucl.logic.data.mappers.definitions.entityToDAO.IUserToUserDAOMapper;
 
 final public class UserToUserDAOMapper implements IUserToUserDAOMapper {
 
-    public static IUserToUserDAOMapper instance = new UserToUserDAOMapper();
-
-    private UserToUserDAOMapper() {
+    public UserToUserDAOMapper() {
     }
 
     /**

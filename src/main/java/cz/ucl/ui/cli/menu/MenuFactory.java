@@ -2,6 +2,7 @@ package cz.ucl.ui.cli.menu;
 
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
+import cz.ucl.logic.app.entities.definition.task.ITaskFilter;
 import cz.ucl.ui.cli.forms.FormField;
 import cz.ucl.ui.cli.menu.system.BackMenu;
 import cz.ucl.ui.cli.menu.system.FillFormMenu;
@@ -17,6 +18,7 @@ import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskTagMenu;
 import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskCategoryMenu;
 import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskFormMenu;
 import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskTagMenu;
+import cz.ucl.ui.cli.menu.user.tasks.filter.TaskSearchFilterMenu;
 import cz.ucl.ui.definition.IUserInterface;
 import cz.ucl.ui.definition.forms.FormFieldType;
 import cz.ucl.ui.definition.menu.IMenu;
@@ -214,5 +216,10 @@ public class MenuFactory implements IMenuFactory {
     @Override
     public IMenu createDeleteTaskMenu(IMenu parentMenu, int taskId) {
         return new TaskDeleteActionMenu(parentMenu, "Smazat úkol", taskId);
+    }
+
+    @Override
+    public IMenu createTaskSearchFilterMenu(IMenu parentMenu, ITaskFilter taskFilter) {
+        return new TaskSearchFilterMenu(parentMenu, "Fulltext vyhledávání", taskFilter);
     }
 }

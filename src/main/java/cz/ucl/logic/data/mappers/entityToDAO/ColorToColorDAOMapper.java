@@ -6,9 +6,7 @@ import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 
 final public class ColorToColorDAOMapper implements IColorToColorDAOMapper {
 
-    public static IColorToColorDAOMapper instance = new ColorToColorDAOMapper();
-
-    private ColorToColorDAOMapper() {
+    public ColorToColorDAOMapper() {
     }
 
     @Override

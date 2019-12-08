@@ -13,13 +13,7 @@ import cz.ucl.logic.data.dao.UserDAO;
 
 final public class UserDAOToUserMapper implements IUserDAOToUserMapper {
 
-    public static final IUserDAOToUserMapper instance = new UserDAOToUserMapper();
-
-    private final ICategoryDAOToCategoryMapper categoryDAOToCategory = CategoryDAOToCategoryMapper.getInstance();
-    private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
-    private final ITagDAOToTagMapper tagDAOToTagMapper = TagDAOToTagMapper.instance;
-
-    private UserDAOToUserMapper() {
+    public UserDAOToUserMapper() {
     }
 
     /**

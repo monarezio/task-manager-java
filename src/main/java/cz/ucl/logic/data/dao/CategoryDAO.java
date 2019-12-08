@@ -22,6 +22,7 @@ public final class CategoryDAO {
     private UserDAO user;
 
     @OneToMany
+    @JoinColumn(name = "category_id")
     private List<TaskDAO> tasks;
 
     @Column(nullable = false)

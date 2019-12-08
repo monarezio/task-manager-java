@@ -37,7 +37,7 @@ public class UserManager implements IUserManager {
             });
             return userDAOToUserMapper.mapOrNull(result.get());
         } catch (NoResultException e) {
-            throw new InvalidCredentialsException("Invalid combinatio");
+            throw new InvalidCredentialsException("Invalid combination");
         }
     }
 

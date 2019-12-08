@@ -8,16 +8,14 @@ import cz.ucl.logic.data.mappers.definitions.DAOToEntity.IColorDAOToColorMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITagDAOToTagMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITaskDAOToTaskMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.IUserDAOToUserMapper;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
 
 final public class TagDAOToTagMapper implements ITagDAOToTagMapper {
 
-    public static final ITagDAOToTagMapper instance = new TagDAOToTagMapper();
+    private final IMapperFactory factory;
 
-    private final IUserDAOToUserMapper userDAOToUserMapper = UserDAOToUserMapper.instance;
-    private final IColorDAOToColorMapper colorDAOToColorMapper = ColorDAOToColorMapper.instance;
-    private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
-
-    private TagDAOToTagMapper() {
+    public TagDAOToTagMapper(IMapperFactory factory) {
+        this.factory = factory;
     }
 
     /**
@@ -32,8 +30,21 @@ final public class TagDAOToTagMapper implements ITagDAOToTagMapper {
                 v.getId(),
                 null,
                 v.getTitle(),
-                colorDAOToColorMapper.mapOrNull(v.getColor()),
+                factory.getColorDaoToColorMapper().mapOrNull(v.getColor()),
                 new ITask[0]
+        );
+    }
+
+    @Override
+    public ITag deepMapOrNull(TagDAO v) {
+        return new Tag(
+                v.getId(),
+                null,
+                v.getTitle(),
+                factory.getColorDaoToColorMapper().mapOrNull(v.getColor()),
+                v.getTasks().stream()
+                        .map(t -> factory.getTaskDAOToTaskMapper().mapOrNull(t))
+                        .toArray(ITask[]::new)
         );
     }
 }

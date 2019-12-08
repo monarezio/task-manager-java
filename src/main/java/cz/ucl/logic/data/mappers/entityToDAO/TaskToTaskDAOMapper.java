@@ -4,11 +4,9 @@ import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.data.dao.TaskDAO;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.ITaskToTaskDAOMapper;
 
-public class TaskToTaskDAOMapper implements ITaskToTaskDAOMapper {
+final public class TaskToTaskDAOMapper implements ITaskToTaskDAOMapper {
 
-    public final static TaskToTaskDAOMapper instance = new TaskToTaskDAOMapper();
-
-    private TaskToTaskDAOMapper() {}
+    public TaskToTaskDAOMapper() {}
 
     @Override
     public TaskDAO mapOrNull(ITask v) {

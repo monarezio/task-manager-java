@@ -33,6 +33,13 @@ public class TasksListMenu extends Menu {
         sb.append("/");
         sb.append(tasksCollection.amountOfPages());
 
+        if(!taskFilter.getSearchKeyword().isEmpty()) {
+            sb.append("\n");
+            sb.append("Vyhledávání podle: ");
+            sb.append(taskFilter.getSearchKeyword());
+            sb.append("\n");
+        }
+
         if (tasksCollection.getTasks().length == 0)
             sb.append("\n\nSeznam úkolů je prázdný");
 
@@ -43,6 +50,8 @@ public class TasksListMenu extends Menu {
             addOption(new MenuOption(nextOptionNumber(), "Detail - " + task.getTitle(), taskDetail));
         }
 
+        IMenu filterMenu = ui.getMenuFactory().createTaskSearchFilterMenu(this, taskFilter);
+        addOption(new MenuOption(nextOptionNumber(), filterMenu));
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }

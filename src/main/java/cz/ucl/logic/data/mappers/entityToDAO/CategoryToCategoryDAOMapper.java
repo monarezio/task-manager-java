@@ -4,14 +4,14 @@ import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.data.dao.CategoryDAO;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.ICategoryToCategoryDAOMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
 
-public class CategoryToCategoryDAOMapper implements ICategoryToCategoryDAOMapper {
+final public class CategoryToCategoryDAOMapper implements ICategoryToCategoryDAOMapper {
 
-    public final static ICategoryToCategoryDAOMapper instance = new CategoryToCategoryDAOMapper();
+    private final IMapperFactory factory;
 
-    private final IColorToColorDAOMapper colorToColorDAOMapper = ColorToColorDAOMapper.instance;
-
-    private CategoryToCategoryDAOMapper() {
+    public CategoryToCategoryDAOMapper(IMapperFactory factory) {
+        this.factory = factory;
     }
 
     @Override
@@ -19,7 +19,7 @@ public class CategoryToCategoryDAOMapper implements ICategoryToCategoryDAOMapper
         if (v == null) return null;
 
         CategoryDAO category = new CategoryDAO(v.getId());
-        category.setColor(colorToColorDAOMapper.mapOrNull(v.getColor()));
+        category.setColor(factory.getColorToColorDaoMapper().mapOrNull(v.getColor()));
         category.setTitle(v.getTitle());
 
         return category;

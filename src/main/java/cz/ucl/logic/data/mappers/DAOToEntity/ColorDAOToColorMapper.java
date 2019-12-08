@@ -6,9 +6,7 @@ import cz.ucl.logic.data.dao.ColorDAO;
 
 final public class ColorDAOToColorMapper implements IColorDAOToColorMapper {
 
-    public static final IColorDAOToColorMapper instance = new ColorDAOToColorMapper();
-
-    private ColorDAOToColorMapper() {
+    public ColorDAOToColorMapper() {
     }
 
     /**

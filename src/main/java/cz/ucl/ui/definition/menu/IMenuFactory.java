@@ -2,6 +2,7 @@ package cz.ucl.ui.definition.menu;
 
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
+import cz.ucl.logic.app.entities.definition.task.ITaskFilter;
 import cz.ucl.ui.definition.IUserInterface;
 
 public interface IMenuFactory {
@@ -45,4 +46,6 @@ public interface IMenuFactory {
     IMenu createDeleteTaskMenu(IMenu parentMenu, int taskId);
 
     IMenu createTaskDetail(IMenu parentMenu, int tagId);
+
+    IMenu createTaskSearchFilterMenu(IMenu parentMenu, ITaskFilter taskFilter);
 }

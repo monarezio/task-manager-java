@@ -11,6 +11,7 @@ import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ICategoryDAOToCategoryM
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 import cz.ucl.logic.exceptions.InvalidColorException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -78,16 +79,14 @@ public class CategoryManager implements ICategoryManager {
     @Override
     public ICategory getCategoryForUserById(long userId, long categoryId) {
         AtomicReference<ICategory> result = new AtomicReference<>();
-        hibernateSessionFactory.createSession(s -> {
-            result.set(
-                    categoryDaoToCategory.mapOrNull(
-                            s.createQuery("from CategoryDAO where id = ?0 AND user_id = ?1", CategoryDAO.class)
-                                    .setParameter(0, categoryId)
-                                    .setParameter(1, userId)
-                                    .getSingleResult()
-                    )
-            );
-        });
+        hibernateSessionFactory.createSession(s -> result.set(
+                categoryDaoToCategory.deepMapOrNull(
+                        s.createQuery("select cat from CategoryDAO cat LEFT JOIN FETCH cat.tasks where cat.id = ?0 AND cat.user.id = ?1", CategoryDAO.class)
+                                .setParameter(0, categoryId)
+                                .setParameter(1, userId)
+                                .getSingleResult()
+                )
+        ));
         return result.get();
     }
 
@@ -97,6 +96,7 @@ public class CategoryManager implements ICategoryManager {
             CategoryDAO category = s.get(CategoryDAO.class, id);
             category.setColor(colorToColorDAOMapper.mapOrNull(color));
             category.setTitle(title);
+            category.setUpdated(LocalDateTime.now());
 
             s.update(category);
         });

@@ -7,22 +7,15 @@ import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ICategoryDAOToCategoryM
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.IColorDAOToColorMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITaskDAOToTaskMapper;
 import cz.ucl.logic.data.dao.CategoryDAO;
-import cz.ucl.logic.data.mappers.definitions.DAOToEntity.IUserDAOToUserMapper;
-import cz.ucl.logic.data.mappers.definitions.entityToDAO.ICategoryToCategoryDAOMapper;
+import cz.ucl.logic.data.mappers.definitions.IMapper;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
 
 final public class CategoryDAOToCategoryMapper implements ICategoryDAOToCategoryMapper {
 
-    // public static final ICategoryDAOToCategoryMapper instance = new CategoryDAOToCategoryMapper();
+    private final IMapperFactory factory;
 
-    public static ICategoryDAOToCategoryMapper getInstance() {
-        return new CategoryDAOToCategoryMapper();
-    }
-
-    private final IColorDAOToColorMapper colorDAOToColorMapper = ColorDAOToColorMapper.instance;
-    private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
-    private final IUserDAOToUserMapper userDAOToUserMapper = UserDAOToUserMapper.instance;
-
-    private CategoryDAOToCategoryMapper() {
+    public CategoryDAOToCategoryMapper(IMapperFactory factory) {
+        this.factory = factory;
     }
 
     /**
@@ -37,8 +30,19 @@ final public class CategoryDAOToCategoryMapper implements ICategoryDAOToCategory
                 v.getId(),
                 null,
                 v.getTitle(),
-                colorDAOToColorMapper.mapOrNull(v.getColor()),
+                factory.getColorDaoToColorMapper().mapOrNull(v.getColor()),
                 new ITask[0]
+        );
+    }
+
+    @Override
+    public ICategory deepMapOrNull(CategoryDAO v) {
+        return new Category(
+                v.getId(),
+                null,
+                v.getTitle(),
+                factory.getColorDaoToColorMapper().mapOrNull(v.getColor()),
+                v.getTasks().stream().map(t -> factory.getTaskDAOToTaskMapper().mapOrNull(t)).toArray(ITask[]::new)
         );
     }
 }

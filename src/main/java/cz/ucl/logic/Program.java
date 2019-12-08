@@ -28,6 +28,8 @@ import cz.ucl.logic.data.mappers.DAOToEntity.*;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.*;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.*;
 import cz.ucl.logic.data.mappers.entityToDAO.*;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
+import cz.ucl.logic.data.mappers.factory.MapperFactory;
 import cz.ucl.logic.exceptions.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -48,25 +50,15 @@ public class Program implements IAppLogic {
     private final ITaskService taskService;
     private final IUserService userService;
 
-    private final IColorDAOToColorMapper colorDAOToColorMapper = ColorDAOToColorMapper.instance;
-    private final ICategoryDAOToCategoryMapper categoryDAOToCategory = CategoryDAOToCategoryMapper.getInstance();
-    private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
-    private final ITagDAOToTagMapper tagDAOToTagMapper = TagDAOToTagMapper.instance;
-    private final IUserDAOToUserMapper userDAOToUserMapper = UserDAOToUserMapper.instance;
-
-    private final IUserToUserDAOMapper userToUserDAOMapper = UserToUserDAOMapper.instance;
-    private final IColorToColorDAOMapper colorToColorDAOMapper = ColorToColorDAOMapper.instance;
-    private final ICategoryToCategoryDAOMapper categoryToCategoryDAOMapper = CategoryToCategoryDAOMapper.instance;
-    private final ITagToTagDAOMapper tagToTagDAOMapper = TagToTagDAOMapper.instance;
-    private final ITaskToTaskDAOMapper taskToTaskDAOMapper = TaskToTaskDAOMapper.instance;
+    private final IMapperFactory mapperFactory = new MapperFactory();
 
     private final IHibernateSessionFactory hibernateSessionFactory = new HibernateSessionFactory();
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    private final IUserManager userManager = new UserManager(userDAOToUserMapper, userToUserDAOMapper, hibernateSessionFactory);
-    private final ITagManager tagManager = new TagManager(tagDAOToTagMapper, colorToColorDAOMapper, hibernateSessionFactory);
-    private final ICategoryManager categoryManager = new CategoryManager(hibernateSessionFactory, categoryDAOToCategory, colorToColorDAOMapper);
-    private final ITaskManager taskManager = new TaskManager(hibernateSessionFactory, categoryToCategoryDAOMapper, tagToTagDAOMapper, taskDAOToTaskMapper);
+    private final IUserManager userManager = new UserManager(mapperFactory.getUserDAOUserDaoToUserMapper(), mapperFactory.getUserToUserDaoMapper(), hibernateSessionFactory);
+    private final ITagManager tagManager = new TagManager(mapperFactory.getTagDAOToTagMapper(), mapperFactory.getColorToColorDaoMapper(), hibernateSessionFactory);
+    private final ICategoryManager categoryManager = new CategoryManager(hibernateSessionFactory, mapperFactory.getCategoryDAOToCategoryMapper(), mapperFactory.getColorToColorDaoMapper());
+    private final ITaskManager taskManager = new TaskManager(hibernateSessionFactory, mapperFactory.getCategoryToCategoryDaoMapper(), mapperFactory.getTagToTagDaoMapper(), mapperFactory.getTaskDAOToTaskMapper());
 
     private final IValidator fieldValidator = new FieldValidator(
             Validation.buildDefaultValidatorFactory().getValidator()

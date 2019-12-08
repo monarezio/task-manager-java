@@ -1,6 +1,7 @@
 package cz.ucl.ui.cli.views;
 
 import cz.ucl.logic.app.entities.definition.ITag;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.ui.definition.views.ITagView;
 
 import java.util.Arrays;
@@ -29,6 +30,13 @@ public class TagView implements ITagView {
         sb.append("\n");
         sb.append("Barva: ");
         sb.append(tag.getColor());
+        sb.append("\n");
+        sb.append("Úkoly: ");
+        sb.append(
+                Arrays.stream(tag.getTasks())
+                        .map(ITask::getTitle)
+                        .collect(Collectors.joining(", "))
+        );
 
         return sb.toString();
     }

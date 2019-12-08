@@ -7,15 +7,14 @@ import cz.ucl.logic.data.dao.TaskDAO;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ICategoryDAOToCategoryMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITagDAOToTagMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITaskDAOToTaskMapper;
+import cz.ucl.logic.data.mappers.factory.IMapperFactory;
 
 final public class TaskDAOToTaskMapper implements ITaskDAOToTaskMapper {
 
-    public static final ITaskDAOToTaskMapper instance = new TaskDAOToTaskMapper();
+    private final IMapperFactory factory;
 
-    private final ICategoryDAOToCategoryMapper categoryDAOToCategoryMapper = CategoryDAOToCategoryMapper.getInstance();
-    private final ITagDAOToTagMapper tagDAOToTagMapper = TagDAOToTagMapper.instance;
-
-    private TaskDAOToTaskMapper() {
+    public TaskDAOToTaskMapper(IMapperFactory factory) {
+        this.factory = factory;
     }
 
     /**
@@ -52,8 +51,8 @@ final public class TaskDAOToTaskMapper implements ITaskDAOToTaskMapper {
                 v.getUpdated(),
                 v.getDeadline(),
                 null,
-                categoryDAOToCategoryMapper.mapOrNull(v.getCategory()),
-                v.getTags().stream().map(tagDAOToTagMapper::mapOrNull).toArray(ITag[]::new),
+                factory.getCategoryDAOToCategoryMapper().mapOrNull(v.getCategory()),
+                v.getTags().stream().map(t -> factory.getTagDAOToTagMapper().mapOrNull(t)).toArray(ITag[]::new),
                 v.isDone()
         );
     }

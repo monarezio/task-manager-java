@@ -1,7 +1,11 @@
 package cz.ucl.ui.cli.views;
 
 import cz.ucl.logic.app.entities.definition.ICategory;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.ui.definition.views.ICategoryView;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class CategoryView implements ICategoryView {
     @Override
@@ -20,6 +24,13 @@ public class CategoryView implements ICategoryView {
         sb.append("\n");
         sb.append("Barva: ");
         sb.append(category.getColor());
+        sb.append("\n");
+        sb.append("Úkoly: ");
+        sb.append(
+                Arrays.stream(category.getTasks())
+                        .map(ITask::getTitle)
+                        .collect(Collectors.joining(", "))
+        );
 
         return sb.toString();
     }

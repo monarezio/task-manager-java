@@ -26,6 +26,7 @@ public final class TagDAO {
     private UserDAO user;
 
     @OneToMany
+    @JoinColumn(name = "tag_id")
     private List<TaskDAO> tasks;
 
     @Column(nullable = false)

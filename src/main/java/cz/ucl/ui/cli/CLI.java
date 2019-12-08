@@ -11,6 +11,7 @@ import cz.ucl.ui.cli.menu.user.settings.categories.CategoryEditFormMenu;
 import cz.ucl.ui.cli.menu.user.settings.tags.TagEditFormMenu;
 import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskFormMenu;
 import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskFormMenu;
+import cz.ucl.ui.cli.menu.user.tasks.filter.TaskSearchFilterMenu;
 import cz.ucl.ui.cli.views.*;
 import cz.ucl.ui.definition.forms.IForm;
 import cz.ucl.ui.definition.forms.IFormManager;
@@ -119,6 +120,8 @@ public class CLI implements ICLI {
             actionEditCategory(fromMenu, formData, fm.getCategoryId());
         } else if (fromMenu.getIdentifier().equals("add_task")) {
             actionAddTask(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("task_search_filter")) {
+            actionFilterFullTextSearch(fromMenu, formData);
         } else try {
             actionEditTask(fromMenu, formData);
         } catch (Exception e) {
@@ -219,6 +222,11 @@ public class CLI implements ICLI {
         boolean isDone = Boolean.parseBoolean(data.get("isdone"));
 
         logic.updateTask(fm.getTaskId(), data.get("title"), data.get("note"), fm.getCategory(), fm.getTags(), deadline, isDone);
+    }
+
+    private void actionFilterFullTextSearch(IMenu menu, Map<String, String> data) {
+        TaskSearchFilterMenu tsfm = (TaskSearchFilterMenu) menu;
+        tsfm.getTaskFilter().setSearchKeyword(data.get("search"));
     }
 
     // TODO

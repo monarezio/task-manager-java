@@ -86,7 +86,7 @@ public class TaskManager implements ITaskManager {
             TaskDAO taskDAO = s.createQuery("from TaskDAO where user_id = :user_id AND id = :task_id ", TaskDAO.class)
                     .setParameter("user_id", userId)
                     .setParameter("task_id", taskId)
-                    .getSingleResult(); //TODO: JOIN
+                    .getSingleResult();
 
             task.set(taskDAOToTaskMapper.deepMapOrNull(taskDAO));
         });

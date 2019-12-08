@@ -11,6 +11,7 @@ import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITagDAOToTagMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 import cz.ucl.logic.exceptions.InvalidColorException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -78,16 +79,14 @@ public class TagManager implements ITagManager {
     @Override
     public ITag getTagForUserById(long userId, long tagId) {
         AtomicReference<ITag> result = new AtomicReference<>();
-        hibernateSessionFactory.createSession(s -> {
-            result.set(
-                    tagDAOToTagMapper.mapOrNull(
-                            s.createQuery("from TagDAO where id = ?0 AND user_id = ?1", TagDAO.class)
-                                    .setParameter(0, tagId)
-                                    .setParameter(1, userId)
-                                    .getSingleResult()
-                    )
-            );
-        });
+        hibernateSessionFactory.createSession(s -> result.set(
+                tagDAOToTagMapper.deepMapOrNull(
+                        s.createQuery("from TagDAO tag LEFT JOIN FETCH tag.tasks tas where tag.id = ?0 AND tag.user.id = ?1", TagDAO.class)
+                                .setParameter(0, tagId)
+                                .setParameter(1, userId)
+                                .getSingleResult()
+                )
+        ));
         return result.get();
     }
 
@@ -97,6 +96,7 @@ public class TagManager implements ITagManager {
             TagDAO tag = s.get(TagDAO.class, id);
             tag.setColor(colorToColorDAOMapper.mapOrNull(color));
             tag.setTitle(title);
+            tag.setUpdated(LocalDateTime.now());
 
             s.update(tag);
         });

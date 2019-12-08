@@ -23,12 +23,15 @@ public final class UserDAO {
     private String username;
 
     @OneToMany
+    @JoinColumn(name = "user_id")
     private List<CategoryDAO> categories;
 
-    @ManyToMany
+    @OneToMany
+    @JoinColumn(name = "user_id")
     private List<TagDAO> tags;
 
     @OneToMany
+    @JoinColumn(name = "user_id")
     private List<TaskDAO> tasks;
 
     @Column(nullable = false)
