@@ -1,13 +1,12 @@
-package cz.ucl.logic.app.entities;
+package cz.ucl.logic.app.entities.task;
 
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +29,8 @@ public final class Task implements ITask {
     @NotNull
     private final LocalDateTime updated;
 
+    private final LocalDateTime deadline;
+
     private boolean isDone;
 
     @NotNull
@@ -39,7 +40,7 @@ public final class Task implements ITask {
 
     private final List<ITag> tags;
 
-    public Task(long id, String title, String note, LocalDateTime created, LocalDateTime updated, IUser user, ICategory category, ITag[] tags, boolean isDone) {
+    public Task(long id, String title, String note, LocalDateTime created, LocalDateTime updated, LocalDateTime deadline,  IUser user, ICategory category, ITag[] tags, boolean isDone) {
         this.id = id;
         this.title = title;
         this.note = note;
@@ -49,6 +50,7 @@ public final class Task implements ITask {
         this.category = category;
         this.tags = Arrays.asList(tags);
         this.isDone = isDone;
+        this.deadline = deadline;
     }
 
     @Override
@@ -89,6 +91,11 @@ public final class Task implements ITask {
     @Override
     public LocalDateTime getUpdatedAt() {
         return updated;
+    }
+
+    @Override
+    public LocalDateTime getDeadlineAt() {
+        return deadline;
     }
 
     @Override

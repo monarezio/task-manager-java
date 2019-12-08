@@ -1,6 +1,6 @@
 package cz.ucl.logic.app.entities;
 
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.app.entities.definition.ITaskOwner;
 
 import java.util.Arrays;

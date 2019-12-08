@@ -7,22 +7,22 @@ import cz.ucl.ui.definition.menu.IMenu;
 
 public class TagDetailMenu extends Menu {
 
-    private int tagId;
+    private int taskId;
 
-    public TagDetailMenu(IMenu parentMenu, String title, int tagId) { //TODO: Pass the fetched tag already?
+    public TagDetailMenu(IMenu parentMenu, String title, int taskId) {
         super(parentMenu, "tag_detail", title);
-        this.tagId = tagId;
+        this.taskId = taskId;
     }
 
     @Override
     protected void build() {
-        ITag tag = logic.getTagById(tagId);
+        ITag tag = logic.getTagById(taskId);
         setDescription(ui.getTagView().formatTag(tag));
 
-        IMenu editMenu = ui.getMenuFactory().createEditTagMenu(this, tagId);
+        IMenu editMenu = ui.getMenuFactory().createEditTaskCategoryMenu(this, taskId);
         addOption(new MenuOption(nextOptionNumber(), editMenu));
 
-        IMenu deleteMenu = ui.getMenuFactory().createDeleteTagMenu(this, tagId);
+        IMenu deleteMenu = ui.getMenuFactory().createDeleteTagMenu(this, taskId);
         addOption(new MenuOption(nextOptionNumber(), deleteMenu));
 
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);

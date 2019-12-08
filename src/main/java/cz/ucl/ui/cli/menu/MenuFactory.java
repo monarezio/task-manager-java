@@ -11,6 +11,12 @@ import cz.ucl.ui.cli.menu.user.settings.categories.*;
 import cz.ucl.ui.cli.menu.user.settings.tags.*;
 import cz.ucl.ui.cli.menu.user.tasks.*;
 import cz.ucl.ui.cli.menu.user.MainMenu;
+import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskCategoryMenu;
+import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskFormMenu;
+import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskTagMenu;
+import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskCategoryMenu;
+import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskFormMenu;
+import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskTagMenu;
 import cz.ucl.ui.definition.IUserInterface;
 import cz.ucl.ui.definition.forms.FormFieldType;
 import cz.ucl.ui.definition.menu.IMenu;
@@ -94,7 +100,7 @@ public class MenuFactory implements IMenuFactory {
 
     @Override
     public IMenu createAddTaskMenu(IMenu parentMenu) {
-        return new AddTaskMenu(parentMenu, "Zobrazit seznam dokončených úkolů");
+        return new AddTaskCategoryMenu(parentMenu, "Zobrazit seznam dokončených úkolů");
     }
 
     @Override
@@ -171,7 +177,42 @@ public class MenuFactory implements IMenuFactory {
     }
 
     @Override
-    public IMenu createAddTaskFormMenu(IMenu parentMenu) {
-        return new AddTaskMenu(parentMenu, "Přidat úkol");
+    public IMenu createAddTaskCategoryMenu(IMenu parentMenu) {
+        return new AddTaskCategoryMenu(parentMenu, "Přidat úkol");
+    }
+
+    @Override
+    public IMenu createAddTaskTagMenu(IMenu parentMenu, ICategory category, ITag[] tags) {
+        return new AddTaskTagMenu(parentMenu, "Task tag menu", category, tags);
+    }
+
+    @Override
+    public IMenu createAddTaskBasicInfoFormMenu(IMenu parentMenu, ICategory category, ITag[] tags) {
+        return new AddTaskFormMenu(parentMenu, "Task formulář", category, tags);
+    }
+
+    @Override
+    public IMenu createTaskDetail(IMenu parentMenu, int taskId) {
+        return new TaskDetailMenu(parentMenu, "Detail úkolu", taskId);
+    }
+
+    @Override
+    public IMenu createEditTaskCategoryMenu(IMenu parentMenu, int taskId) {
+        return new EditTaskCategoryMenu(parentMenu, taskId,"Upravit úkol");
+    }
+
+    @Override
+    public IMenu createEditTaskTagMenu(IMenu parentMenu, ICategory category, ITag[] tags, int taskId) {
+        return new EditTaskTagMenu(parentMenu, "Uprava tagů v úkolu", category, tags, taskId);
+    }
+
+    @Override
+    public IMenu createEditTaskBasicInfoFormMenu(IMenu parentMenu, ICategory category, ITag[] tags, int taskId) {
+        return new EditTaskFormMenu(parentMenu, "Upráva úkolů", taskId, category, tags);
+    }
+
+    @Override
+    public IMenu createDeleteTaskMenu(IMenu parentMenu, int taskId) {
+        return new TaskDeleteActionMenu(parentMenu, "Smazat úkol", taskId);
     }
 }

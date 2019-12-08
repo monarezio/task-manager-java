@@ -2,24 +2,30 @@ package cz.ucl.ui.cli;
 
 import cz.ucl.logic.IAppLogic;
 import cz.ucl.logic.app.entities.definition.Color;
+import cz.ucl.logic.app.entities.definition.ICategory;
+import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.exceptions.*;
 import cz.ucl.ui.cli.forms.FormManager;
 import cz.ucl.ui.cli.menu.MenuFactory;
 import cz.ucl.ui.cli.menu.user.settings.categories.CategoryEditFormMenu;
 import cz.ucl.ui.cli.menu.user.settings.tags.TagEditFormMenu;
+import cz.ucl.ui.cli.menu.user.tasks.add.AddTaskFormMenu;
+import cz.ucl.ui.cli.menu.user.tasks.edit.EditTaskFormMenu;
 import cz.ucl.ui.cli.views.*;
 import cz.ucl.ui.definition.forms.IForm;
 import cz.ucl.ui.definition.forms.IFormManager;
 import cz.ucl.ui.definition.menu.*;
 import cz.ucl.ui.definition.views.*;
 
-import javax.swing.*;
 import java.io.Console;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class CLI implements ICLI {
+
     private IMenuFactory menuFactory;
     private IAppLogic logic;
 
@@ -111,8 +117,10 @@ public class CLI implements ICLI {
         } else if (fromMenu.getIdentifier().equals("edit_category")) {
             CategoryEditFormMenu fm = (CategoryEditFormMenu) fromMenu;
             actionEditCategory(fromMenu, formData, fm.getCategoryId());
+        } else if (fromMenu.getIdentifier().equals("add_task")) {
+            actionAddTask(fromMenu, formData);
         } else try {
-            throw new Exception("NOT IMPLEMENTED");
+            actionEditTask(fromMenu, formData);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,6 +203,22 @@ public class CLI implements ICLI {
         } catch (Exception e) {
             drawError(e.getMessage());
         }
+    }
+
+    private void actionAddTask(IMenu menu, Map<String, String> data) {
+        AddTaskFormMenu fm = (AddTaskFormMenu) menu;
+        LocalDateTime deadline = LocalDateTime.parse(data.get("deadline"));
+        boolean isDone = Boolean.parseBoolean(data.get("isdone"));
+
+        logic.createTask(data.get("title"), data.get("note"), fm.getCategory(), fm.getTags(), deadline, isDone);
+    }
+
+    private void actionEditTask(IMenu menu, Map<String, String> data) {
+        EditTaskFormMenu fm = (EditTaskFormMenu) menu;
+        LocalDateTime deadline = LocalDateTime.parse(data.get("deadline"));
+        boolean isDone = Boolean.parseBoolean(data.get("isdone"));
+
+        logic.updateTask(fm.getTaskId(), data.get("title"), data.get("note"), fm.getCategory(), fm.getTags(), deadline, isDone);
     }
 
     // TODO

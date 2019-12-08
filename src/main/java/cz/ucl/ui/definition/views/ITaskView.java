@@ -1,6 +1,6 @@
 package cz.ucl.ui.definition.views;
 
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 
 /** Views are used only for formatting purposes. They are stateless. */
 public interface ITaskView {

@@ -7,7 +7,7 @@ import cz.ucl.logic.data.dao.ColorDAO;
 import cz.ucl.logic.data.dao.UserDAO;
 import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
 import cz.ucl.logic.data.managers.definitions.ICategoryManager;
-import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ICategoryDAOToCategory;
+import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ICategoryDAOToCategoryMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 import cz.ucl.logic.exceptions.InvalidColorException;
 
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 public class CategoryManager implements ICategoryManager {
 
     private final IHibernateSessionFactory hibernateSessionFactory;
-    private final ICategoryDAOToCategory categoryDaoToCategory;
+    private final ICategoryDAOToCategoryMapper categoryDaoToCategory;
     private final IColorToColorDAOMapper colorToColorDAOMapper;
 
-    public CategoryManager(IHibernateSessionFactory hibernateSessionFactory, ICategoryDAOToCategory categoryDaoToCategory, IColorToColorDAOMapper colorToColorDAOMapper) {
+    public CategoryManager(IHibernateSessionFactory hibernateSessionFactory, ICategoryDAOToCategoryMapper categoryDaoToCategory, IColorToColorDAOMapper colorToColorDAOMapper) {
         this.hibernateSessionFactory = hibernateSessionFactory;
         this.categoryDaoToCategory = categoryDaoToCategory;
         this.colorToColorDAOMapper = colorToColorDAOMapper;

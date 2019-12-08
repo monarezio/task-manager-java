@@ -1,8 +1,5 @@
 package cz.ucl.logic;
 
-import cz.ucl.logic.app.entities.definition.ITag;
-import cz.ucl.logic.app.entities.definition.ITask;
-import cz.ucl.logic.app.entities.definition.IUser;
 import cz.ucl.logic.app.services.definition.ICategoryService;
 import cz.ucl.logic.app.services.definition.ITagService;
 import cz.ucl.logic.app.services.definition.ITaskService;

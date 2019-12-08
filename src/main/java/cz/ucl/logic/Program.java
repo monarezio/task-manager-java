@@ -3,8 +3,10 @@ package cz.ucl.logic;
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
+import cz.ucl.logic.app.entities.definition.task.ITaskFilter;
+import cz.ucl.logic.app.entities.definition.task.ITasksCollection;
 import cz.ucl.logic.app.services.CategoryService;
 import cz.ucl.logic.app.services.TagService;
 import cz.ucl.logic.app.services.TaskService;
@@ -16,20 +18,21 @@ import cz.ucl.logic.data.hibernate.HibernateSessionFactory;
 import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
 import cz.ucl.logic.data.managers.CategoryManager;
 import cz.ucl.logic.data.managers.TagManager;
+import cz.ucl.logic.data.managers.TaskManager;
 import cz.ucl.logic.data.managers.UserManager;
 import cz.ucl.logic.data.managers.definitions.ICategoryManager;
 import cz.ucl.logic.data.managers.definitions.ITagManager;
+import cz.ucl.logic.data.managers.definitions.ITaskManager;
 import cz.ucl.logic.data.managers.definitions.IUserManager;
 import cz.ucl.logic.data.mappers.DAOToEntity.*;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.*;
-import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
-import cz.ucl.logic.data.mappers.definitions.entityToDAO.IUserToUserDAOMapper;
-import cz.ucl.logic.data.mappers.entityToDAO.ColorToColorDAOMapper;
-import cz.ucl.logic.data.mappers.entityToDAO.UserToUserDAOMapper;
+import cz.ucl.logic.data.mappers.definitions.entityToDAO.*;
+import cz.ucl.logic.data.mappers.entityToDAO.*;
 import cz.ucl.logic.exceptions.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Validation;
+import java.time.LocalDateTime;
 
 /**
  * This class HAS to honor the Facade design pattern!
@@ -46,13 +49,16 @@ public class Program implements IAppLogic {
     private final IUserService userService;
 
     private final IColorDAOToColorMapper colorDAOToColorMapper = ColorDAOToColorMapper.instance;
-    private final ICategoryDAOToCategory categoryDAOToCategory = CategoryDAOToCategoryMapper.instance;
+    private final ICategoryDAOToCategoryMapper categoryDAOToCategory = CategoryDAOToCategoryMapper.getInstance();
     private final ITaskDAOToTaskMapper taskDAOToTaskMapper = TaskDAOToTaskMapper.instance;
     private final ITagDAOToTagMapper tagDAOToTagMapper = TagDAOToTagMapper.instance;
     private final IUserDAOToUserMapper userDAOToUserMapper = UserDAOToUserMapper.instance;
 
     private final IUserToUserDAOMapper userToUserDAOMapper = UserToUserDAOMapper.instance;
     private final IColorToColorDAOMapper colorToColorDAOMapper = ColorToColorDAOMapper.instance;
+    private final ICategoryToCategoryDAOMapper categoryToCategoryDAOMapper = CategoryToCategoryDAOMapper.instance;
+    private final ITagToTagDAOMapper tagToTagDAOMapper = TagToTagDAOMapper.instance;
+    private final ITaskToTaskDAOMapper taskToTaskDAOMapper = TaskToTaskDAOMapper.instance;
 
     private final IHibernateSessionFactory hibernateSessionFactory = new HibernateSessionFactory();
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -60,6 +66,7 @@ public class Program implements IAppLogic {
     private final IUserManager userManager = new UserManager(userDAOToUserMapper, userToUserDAOMapper, hibernateSessionFactory);
     private final ITagManager tagManager = new TagManager(tagDAOToTagMapper, colorToColorDAOMapper, hibernateSessionFactory);
     private final ICategoryManager categoryManager = new CategoryManager(hibernateSessionFactory, categoryDAOToCategory, colorToColorDAOMapper);
+    private final ITaskManager taskManager = new TaskManager(hibernateSessionFactory, categoryToCategoryDAOMapper, tagToTagDAOMapper, taskDAOToTaskMapper);
 
     private final IValidator fieldValidator = new FieldValidator(
             Validation.buildDefaultValidatorFactory().getValidator()
@@ -69,7 +76,7 @@ public class Program implements IAppLogic {
         userService = new UserService(userManager, bCryptPasswordEncoder, fieldValidator);
         categoryService = new CategoryService(userService, categoryManager);
         tagService = new TagService(userService, tagManager);
-        taskService = new TaskService(userService);
+        taskService = new TaskService(userService, taskManager);
     }
 
     @Override
@@ -138,38 +145,8 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public ITask[] getAllTasks() {
-        return taskService.getAllTasks();
-    }
-
-    @Override
-    public ITask[] getAllTasks(TasksOrder order) {
-        return taskService.getAllTasks(order);
-    }
-
-    @Override
-    public ITask[] searchTasksForKeyword(String keyword) {
-        return taskService.searchTasksForKeyword(keyword);
-    }
-
-    @Override
-    public ITask[] getAllTasksByCategory(ICategory category) {
-        return taskService.getAllTasksByCategory(category);
-    }
-
-    @Override
-    public ITask[] getAllTasksByTag(ITag tag) {
-        return taskService.getAllTasksByTag(tag);
-    }
-
-    @Override
-    public ITask[] getAllTasksByTags(ITag[] tag) {
-        return taskService.getAllTasksByTags(tag);
-    }
-
-    @Override
-    public ITask[] getAllTasksByTags(ITag[] tag, ICategory category) {
-        return taskService.getAllTasksByTags(tag, category);
+    public ITasksCollection getAllTasks(ITaskFilter taskFilter) {
+        return taskService.getAllTasks(taskFilter);
     }
 
     @Override
@@ -178,23 +155,28 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void createTask(String title) {
-        taskService.createTask(title);
+    public void createTask(String title, boolean isDone) {
+        taskService.createTask(title, isDone);
     }
 
     @Override
-    public void createTask(String title, String note) {
-        taskService.createTask(title, note);
+    public void createTask(String title, String note, boolean isDone) {
+        taskService.createTask(title, note, isDone);
     }
 
     @Override
-    public void createTask(String title, String note, ICategory category) {
-        taskService.createTask(title, note, category);
+    public void createTask(String title, String note, ICategory category, boolean isDone) {
+        taskService.createTask(title, note, category, isDone);
     }
 
     @Override
-    public void updateTask(int id, String title, Color color) {
-        taskService.updateTask(id, title, color);
+    public void createTask(String title, String note, ICategory category, ITag[] tags, LocalDateTime deadline, boolean isDone) {
+        taskService.createTask(title, note, category, tags, deadline, isDone);
+    }
+
+    @Override
+    public void updateTask(int id, String title, String note, ICategory category, ITag[] tags, LocalDateTime deadline, boolean isDone) {
+        taskService.updateTask(id, title, note, category, tags, deadline, isDone);
     }
 
     @Override

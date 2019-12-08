@@ -14,7 +14,7 @@ public class TasksRootMenu extends Menu {
         setDescription("Administrace tasků");
 
         IMenu tasksListMenu = ui.getMenuFactory().createTasksListMenu(this);
-        IMenu addTaskForm = ui.getMenuFactory().createAddTaskFormMenu(this);
+        IMenu addTaskForm = ui.getMenuFactory().createAddTaskCategoryMenu(this);
 
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 

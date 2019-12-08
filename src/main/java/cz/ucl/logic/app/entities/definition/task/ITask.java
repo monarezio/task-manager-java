@@ -1,4 +1,8 @@
-package cz.ucl.logic.app.entities.definition;
+package cz.ucl.logic.app.entities.definition.task;
+
+import cz.ucl.logic.app.entities.definition.ICategory;
+import cz.ucl.logic.app.entities.definition.ITag;
+import cz.ucl.logic.app.entities.definition.IUser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +25,8 @@ public interface ITask {
     LocalDateTime getCreatedAt();
 
     LocalDateTime getUpdatedAt();
+
+    LocalDateTime getDeadlineAt();
     //endregion
 
     //region Tags

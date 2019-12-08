@@ -25,8 +25,6 @@ final public class UserToUserDAOMapper implements IUserToUserDAOMapper {
         user.setUsername(v.getUsername());
         user.setPassword(v.getPassword());
 
-        /* TODO: it is'nt now needed but maybe I should implement mappers for Categroies, Tasks and Tags.  */
-
         return user;
     }
 }

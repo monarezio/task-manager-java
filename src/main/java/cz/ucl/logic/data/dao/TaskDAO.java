@@ -26,7 +26,7 @@ public final class TaskDAO {
     private LocalDateTime updated = LocalDateTime.now();
 
     @Column(nullable = true)
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
     @Column(nullable = false)
     private boolean isDone;
@@ -106,5 +106,13 @@ public final class TaskDAO {
 
     public void setTags(List<TagDAO> tags) {
         this.tags = tags;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 }

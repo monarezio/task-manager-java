@@ -2,12 +2,11 @@ package cz.ucl.logic.app.entities;
 
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.app.entities.definition.IUser;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 

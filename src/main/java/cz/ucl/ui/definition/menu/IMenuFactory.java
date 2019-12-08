@@ -34,5 +34,15 @@ public interface IMenuFactory {
 
     IMenu createTasksRootMenu(IMenu parentMenu);
     IMenu createTasksListMenu(IMenu parentMenu);
-    IMenu createAddTaskFormMenu(IMenu parentMenu);
+
+    IMenu createAddTaskCategoryMenu(IMenu parentMenu);
+    IMenu createAddTaskTagMenu(IMenu parentMenu, ICategory category, ITag[] tags);
+    IMenu createAddTaskBasicInfoFormMenu(IMenu parentMenu, ICategory category, ITag[] tags);
+
+    IMenu createEditTaskCategoryMenu(IMenu parentMenu, int taskId);
+    IMenu createEditTaskTagMenu(IMenu parentMenu, ICategory category, ITag[] tags, int taskId);
+    IMenu createEditTaskBasicInfoFormMenu(IMenu parentMenu, ICategory category, ITag[] tags, int taskId);
+    IMenu createDeleteTaskMenu(IMenu parentMenu, int taskId);
+
+    IMenu createTaskDetail(IMenu parentMenu, int tagId);
 }

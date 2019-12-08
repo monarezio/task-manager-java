@@ -8,10 +8,16 @@ import cz.ucl.ui.definition.forms.IFormManager;
 import cz.ucl.ui.exceptions.InvalidFieldValueException;
 import cz.ucl.ui.exceptions.UnsupportedInputTypeException;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FormManager implements IFormManager {
+
+    private final static DateTimeFormatter czechDateTimeFormat = DateTimeFormatter.ofPattern("d/M/yyyy H:mm");
+
     private IForm form;
     private IUserInterface ui;
     private Map<String, String> data;
@@ -52,6 +58,12 @@ public class FormManager implements IFormManager {
                 } else if (formField.getType() == FormFieldType.SECURE) {
                     value = ui.promptSecureString();
                     value = processSecureInput(value, formField);
+                } else if (formField.getType() == FormFieldType.BOOLEAN) {
+                    value = ui.promptString();
+                    value = String.valueOf(processBooleanInput(value, formField));
+                } else if (formField.getType() == FormFieldType.DATETIME) {
+                    value = ui.promptString();
+                    value = processDateTime(value, formField).toString();
                 } else {
                     throw new RuntimeException("Form field type " + formField.getType() + " is not supported");
                 }
@@ -91,6 +103,27 @@ public class FormManager implements IFormManager {
     public String processSecureInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
         throwExceptionIfRequiredAndEmpty(userInput, formField);
         return userInput;
+    }
+
+    @Override
+    public boolean processBooleanInput(String userInput, IFormField formField) throws UnsupportedInputTypeException, InvalidFieldValueException {
+        throwExceptionIfRequiredAndEmpty(userInput, formField);
+        if(userInput.toLowerCase().equals("ano"))
+            return true;
+        else if(userInput.toLowerCase().equals("ne"))
+            return false;
+
+        throw new InvalidFieldValueException("Possible values are `ano` or `ne`");
+    }
+
+    @Override
+    public LocalDateTime processDateTime(String userInput, IFormField formField) throws InvalidFieldValueException {
+        throwExceptionIfRequiredAndEmpty(userInput, formField);
+        try {
+            return LocalDateTime.parse(userInput, czechDateTimeFormat);
+        } catch(DateTimeException e) {
+            throw new InvalidFieldValueException("Date and time must be in d/M/yyyy H:mm format");
+        }
     }
 
     private void throwExceptionIfRequiredAndEmpty(String userInput, IFormField formField) throws InvalidFieldValueException {

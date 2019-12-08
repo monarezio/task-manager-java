@@ -8,7 +8,7 @@ public class TagDeleteActionMenu extends ActionMenu {
     private int tagId;
 
     public TagDeleteActionMenu(IMenu parentMenu, String title, int tagId) {
-        super(parentMenu, "tag_delete", title, parentMenu.getParentMenu()); // TODO: fix targetMenu
+        super(parentMenu, "tag_delete", title, parentMenu.getParentMenu());
         this.tagId = tagId;
     }
 

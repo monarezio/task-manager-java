@@ -2,7 +2,7 @@ package cz.ucl.logic.data.mappers.DAOToEntity;
 
 import cz.ucl.logic.app.entities.Tag;
 import cz.ucl.logic.app.entities.definition.ITag;
-import cz.ucl.logic.app.entities.definition.ITask;
+import cz.ucl.logic.app.entities.definition.task.ITask;
 import cz.ucl.logic.data.dao.TagDAO;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.IColorDAOToColorMapper;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITagDAOToTagMapper;
