@@ -10,4 +10,12 @@ public interface IUserManager {
 
     void addUser(IUser user) throws EmailAddressAlreadyUsedException;
 
+    void addUserWithoutMockData(IUser user) throws EmailAddressAlreadyUsedException;
+
+    void updateUser(long userId, String username, String email) throws EmailAddressAlreadyUsedException;
+
+    void updatePassword(long userId, String password);
+
+    void destroy(long userId);
+
 }

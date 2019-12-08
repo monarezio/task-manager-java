@@ -153,7 +153,7 @@ public abstract class Menu implements IMenu {
         return false; // TODO: How do I know is this is a form?
     }
 
-    protected void clearOptions() {
+    protected final void clearOptions() {
         options.clear();
     }
 }

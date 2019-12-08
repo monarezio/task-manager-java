@@ -52,16 +52,10 @@ public class MainMenu extends Menu {
         );
 
         IMenu tasksRootMenu = ui.getMenuFactory().createTasksRootMenu(this);
-        IMenu notFinishedTasksMenu = ui.getMenuFactory().createNotFinishedTasksMenu(this);
-        IMenu finishedTasksMenu = ui.getMenuFactory().createFinishedTasksMenu(this);
-        IMenu addTaskMenu = ui.getMenuFactory().createAddTaskMenu(this);
         IMenu settingsMenu = ui.getMenuFactory().createSettingsMenu(this);
         IMenu quitMenu = ui.getMenuFactory().createQuitMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tasksRootMenu));
-        addOption(new MenuOption(nextOptionNumber(), notFinishedTasksMenu));
-        addOption(new MenuOption(nextOptionNumber(), finishedTasksMenu));
-        addOption(new MenuOption(nextOptionNumber(), addTaskMenu));
         addOption(new MenuOption(nextOptionNumber(), settingsMenu));
         addOption(new MenuOption(nextOptionNumber(), quitMenu));
     }

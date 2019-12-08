@@ -15,10 +15,12 @@ public class SettingsMenu extends Menu {
 
         IMenu tagsMenu = ui.getMenuFactory().createTagsRootMenu(this);
         IMenu categoriesMenu = ui.getMenuFactory().createCategoriesRootMenu(this);
+        IMenu userMenu = ui.getMenuFactory().createUserSettingsMenu(this);
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tagsMenu));
         addOption(new MenuOption(nextOptionNumber(), categoriesMenu));
+        addOption(new MenuOption(nextOptionNumber(), userMenu));
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }
 }

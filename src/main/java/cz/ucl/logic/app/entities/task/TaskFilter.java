@@ -26,6 +26,10 @@ public class TaskFilter implements ITaskFilter {
         this.taskDoneStatus = taskDoneStatus;
     }
 
+    public TaskFilter() {
+        this(TasksOrder.BY_DEADLINE_AT_ASC, "", null, new ITag[0], 1, TaskDoneStatus.IGNORE);
+    }
+
     @Override
     public TasksOrder getOrder() {
         return order;
@@ -56,32 +60,49 @@ public class TaskFilter implements ITaskFilter {
     }
 
     @Override
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    @Override
     public void setOrder(TasksOrder order) {
+        setPage(1);
         this.order = order;
     }
 
     @Override
     public void setSearchKeyword(String searchKeyword) {
+        setPage(1);
         this.searchKeyword = searchKeyword;
     }
 
     @Override
     public void setByCategory(ICategory byCategory) {
+        setPage(1);
         this.byCategory = byCategory;
     }
 
     @Override
     public void setTaskStatus(TaskDoneStatus taskDoneStatus) {
+        setPage(1);
         this.taskDoneStatus = taskDoneStatus;
     }
 
     @Override
     public void removeTag(ITag tag) {
-        byTags.add(tag);
+        setPage(1);
+        byTags.remove(tag);
     }
 
     @Override
     public void clearAllTags() {
+        setPage(1);
         byTags.clear();
+    }
+
+    @Override
+    public void addTag(ITag tag) {
+        setPage(1);
+        byTags.add(tag);
     }
 }

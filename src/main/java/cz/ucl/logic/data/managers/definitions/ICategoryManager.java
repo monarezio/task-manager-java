@@ -12,10 +12,10 @@ public interface ICategoryManager {
 
     void createCategory(String title, long userId);
 
-    void destroyCategory(long id);
+    void destroyCategory(long userId, long id);
 
     ICategory getCategoryForUserById(long userId, long tagId);
 
-    void updateCategory(long id, String title, Color color);
+    void updateCategory(long userId, long id, String title, Color color);
 
 }

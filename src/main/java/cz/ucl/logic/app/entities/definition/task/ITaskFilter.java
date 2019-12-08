@@ -14,11 +14,13 @@ public interface ITaskFilter {
     int getPage();
     TaskDoneStatus getTaskDoneStatus();
 
+    void setPage(int page);
     void setOrder(TasksOrder order);
     void setSearchKeyword(String searchKeyword);
     void setByCategory(ICategory category);
     void removeTag(ITag tag);
     void clearAllTags();
+    void addTag(ITag tag);
     void setTaskStatus(TaskDoneStatus taskDoneStatus);
 
 }

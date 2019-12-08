@@ -52,6 +52,13 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void registerUserWithoutMockData(String email, String username, String password) throws EmailAddressAlreadyUsedException, InvalidPropertyException {
+        User user = new User(email, username, bCryptPasswordEncoder.encode(password));
+        validator.validateAll(user);
+        userManager.addUserWithoutMockData(user);
+    }
+
+    @Override
     public boolean isUserLoggedIn() {
         return currentUser != null;
     }
@@ -65,6 +72,20 @@ public class UserService implements IUserService {
     public void destroyUserLoggedIn() throws NotLoggedInException {
         if (currentUser == null)
             throw new NotLoggedInException("User is not logged in");
+
+        userManager.destroy(currentUser.getId());
         currentUser = null;
+    }
+
+    @Override
+    public void updateUser(String username, String email) throws EmailAddressAlreadyUsedException, InvalidPropertyException {
+        User user = new User(email, username, "");
+        validator.validateAll(user);
+        userManager.updateUser(currentUser.getId(), username, email);
+    }
+
+    @Override
+    public void updatePassword(String password) {
+        userManager.updatePassword(currentUser.getId(), bCryptPasswordEncoder.encode(password));
     }
 }

@@ -3,6 +3,7 @@ package cz.ucl.logic.data.managers.definitions;
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.exceptions.InvalidColorException;
+import cz.ucl.logic.exceptions.TagInUseException;
 
 public interface ITagManager {
 
@@ -12,10 +13,10 @@ public interface ITagManager {
 
     void createTag(String title, long userId);
 
-    void destroyTag(long id);
+    void destroyTag(long userId, long id) throws TagInUseException;
 
     ITag getTagForUserById(long userId, long tagId);
 
-    void updateTag(long id, String title, Color color);
+    void updateTag(long userId, long id, String title, Color color);
 
 }

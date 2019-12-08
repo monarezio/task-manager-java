@@ -1,5 +1,6 @@
 package cz.ucl.logic;
 
+import cz.ucl.logic.app.entities.Tag;
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.app.entities.definition.ITag;
@@ -14,6 +15,7 @@ import cz.ucl.logic.app.services.UserService;
 import cz.ucl.logic.app.services.definition.*;
 import cz.ucl.logic.app.validators.FieldValidator;
 import cz.ucl.logic.app.validators.definition.IValidator;
+import cz.ucl.logic.data.dao.TagDAO;
 import cz.ucl.logic.data.hibernate.HibernateSessionFactory;
 import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
 import cz.ucl.logic.data.managers.CategoryManager;
@@ -35,6 +37,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Validation;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 /**
  * This class HAS to honor the Facade design pattern!
@@ -71,9 +74,22 @@ public class Program implements IAppLogic {
         taskService = new TaskService(userService, taskManager);
     }
 
+    private int randomNumberGenerator(int min, int max) {
+        return (int) ((Math.random() * ((max - min) + 1)) + min); //TODO: If more time this should be in util class
+    }
+
     @Override
-    public void generateMockData() {
-        // TODO: Implement
+    public void generateMockData() throws InvalidColorException, EmailAddressAlreadyUsedException, InvalidPropertyException {
+        String username = "user" + randomNumberGenerator(1, 1000);
+        String email = "e" + randomNumberGenerator(1, 1000) + "@" + "gmail.com";
+        String password = "123456";
+
+        System.out.println("Setting username: " + username);
+        System.out.println("Setting email: " + email);
+
+        registerUserWithoutMockData(email, username, password);
+
+        System.out.println("Password for new user: " + password);
     }
 
     @Override
@@ -132,7 +148,7 @@ public class Program implements IAppLogic {
     }
 
     @Override
-    public void destroyTag(int id) {
+    public void destroyTag(int id) throws TagInUseException {
         tagService.destroyTag(id);
     }
 
@@ -192,6 +208,11 @@ public class Program implements IAppLogic {
     }
 
     @Override
+    public void registerUserWithoutMockData(String email, String username, String password) throws EmailAddressAlreadyUsedException, InvalidPropertyException {
+        userService.registerUserWithoutMockData(email, username, password);
+    }
+
+    @Override
     public boolean isUserLoggedIn() {
         return userService.isUserLoggedIn();
     }
@@ -204,5 +225,15 @@ public class Program implements IAppLogic {
     @Override
     public void destroyUserLoggedIn() throws NotLoggedInException {
         userService.destroyUserLoggedIn();
+    }
+
+    @Override
+    public void updateUser(String username, String email) throws EmailAddressAlreadyUsedException, InvalidPropertyException {
+        userService.updateUser(username, email);
+    }
+
+    @Override
+    public void updatePassword(String password) {
+        userService.updatePassword(password);
     }
 }

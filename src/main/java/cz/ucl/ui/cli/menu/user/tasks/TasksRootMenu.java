@@ -14,11 +14,15 @@ public class TasksRootMenu extends Menu {
         setDescription("Administrace tasků");
 
         IMenu tasksListMenu = ui.getMenuFactory().createTasksListMenu(this);
+        IMenu tasksFinishedListMenu = ui.getMenuFactory().createFinishedTasksListMenu(this);
+        IMenu tasksNotFinishedListMenu = ui.getMenuFactory().createNotFinishedTasksListMenu(this);
         IMenu addTaskForm = ui.getMenuFactory().createAddTaskCategoryMenu(this);
 
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
 
         addOption(new MenuOption(nextOptionNumber(), tasksListMenu));
+        addOption(new MenuOption(nextOptionNumber(), tasksFinishedListMenu));
+        addOption(new MenuOption(nextOptionNumber(), tasksNotFinishedListMenu));
         addOption(new MenuOption(nextOptionNumber(), addTaskForm));
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }

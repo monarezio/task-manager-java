@@ -1,5 +1,6 @@
 package cz.ucl.logic.data.managers;
 
+import cz.ucl.logic.app.entities.Category;
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ICategory;
 import cz.ucl.logic.data.dao.CategoryDAO;
@@ -72,8 +73,15 @@ public class CategoryManager implements ICategoryManager {
     }
 
     @Override
-    public void destroyCategory(long id) {
-        hibernateSessionFactory.createSession(s -> s.delete(new CategoryDAO(id)));
+    public void destroyCategory(long userId, long id) {
+        hibernateSessionFactory.createSession(s -> {
+            CategoryDAO category = s.createQuery("from CategoryDAO where id = ?0 AND user_id = ?1", CategoryDAO.class)
+                    .setParameter(0, id)
+                    .setParameter(1, userId)
+                    .getSingleResult();
+
+            s.delete(category);
+        });
     }
 
     @Override
@@ -91,9 +99,12 @@ public class CategoryManager implements ICategoryManager {
     }
 
     @Override
-    public void updateCategory(long id, String title, Color color) {
+    public void updateCategory(long userId, long id, String title, Color color) {
         hibernateSessionFactory.createSession(s -> {
-            CategoryDAO category = s.get(CategoryDAO.class, id);
+            CategoryDAO category = s.createQuery("from CategoryDAO where id = ?0 AND user_id = ?1", CategoryDAO.class)
+                    .setParameter(0, id)
+                    .setParameter(1, userId)
+                    .getSingleResult();
             category.setColor(colorToColorDAOMapper.mapOrNull(color));
             category.setTitle(title);
             category.setUpdated(LocalDateTime.now());

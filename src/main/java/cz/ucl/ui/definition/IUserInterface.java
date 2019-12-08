@@ -55,6 +55,10 @@ public interface IUserInterface {
 
     /** This method should return the IMenuView instance which will be used for Menu formatting */
     IMenuView getMenuView();
+
+    ITaskFilterView getFilterMenuView();
+
+    IUserSettingsView getSettingsMenuView();
     //endregion
 
     //region Forms

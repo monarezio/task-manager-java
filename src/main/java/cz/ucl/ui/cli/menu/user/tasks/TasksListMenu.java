@@ -1,26 +1,20 @@
 package cz.ucl.ui.cli.menu.user.tasks;
 
+import cz.ucl.logic.app.entities.definition.task.ITaskFilter;
 import cz.ucl.logic.app.entities.definition.task.ITasksCollection;
 import cz.ucl.logic.app.entities.task.TaskFilter;
-import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.app.entities.definition.task.ITask;
-import cz.ucl.logic.app.entities.definition.TaskDoneStatus;
-import cz.ucl.logic.app.services.definition.TasksOrder;
 import cz.ucl.ui.cli.menu.Menu;
 import cz.ucl.ui.cli.menu.MenuOption;
 import cz.ucl.ui.definition.menu.IMenu;
 
 public class TasksListMenu extends Menu {
 
-    private final TaskFilter taskFilter;
+    private final ITaskFilter taskFilter;
 
-    private TasksListMenu(IMenu parentMenu, String title, TaskFilter taskFilter) {
+    public TasksListMenu(IMenu parentMenu, String title, ITaskFilter taskFilter) {
         super(parentMenu, "all_tasks_menu", title);
         this.taskFilter = taskFilter;
-    }
-
-    public TasksListMenu(IMenu parentMenu, String title) {
-        this(parentMenu, title, new TaskFilter(TasksOrder.BY_DEADLINE_AT_ASC, "", null, new ITag[0], 1, TaskDoneStatus.IGNORE));
     }
 
     @Override
@@ -33,13 +27,6 @@ public class TasksListMenu extends Menu {
         sb.append("/");
         sb.append(tasksCollection.amountOfPages());
 
-        if(!taskFilter.getSearchKeyword().isEmpty()) {
-            sb.append("\n");
-            sb.append("Vyhledávání podle: ");
-            sb.append(taskFilter.getSearchKeyword());
-            sb.append("\n");
-        }
-
         if (tasksCollection.getTasks().length == 0)
             sb.append("\n\nSeznam úkolů je prázdný");
 
@@ -50,8 +37,19 @@ public class TasksListMenu extends Menu {
             addOption(new MenuOption(nextOptionNumber(), "Detail - " + task.getTitle(), taskDetail));
         }
 
-        IMenu filterMenu = ui.getMenuFactory().createTaskSearchFilterMenu(this, taskFilter);
+        IMenu filterMenu = ui.getMenuFactory().createTaskFilterMenu(this, taskFilter);
         addOption(new MenuOption(nextOptionNumber(), filterMenu));
+
+        if (taskFilter.getPage() < tasksCollection.amountOfPages()) {
+            IMenu upMenu = ui.getMenuFactory().createTaskPageUpAction(this, taskFilter);
+            addOption(new MenuOption(nextOptionNumber(), upMenu));
+        }
+
+        if (taskFilter.getPage() > 1) {
+            IMenu downMenu = ui.getMenuFactory().createTaskPageDownAction(this, taskFilter);
+            addOption(new MenuOption(nextOptionNumber(), downMenu));
+        }
+
         IMenu backMenu = ui.getMenuFactory().createBackMenu(this);
         addOption(new MenuOption(nextOptionNumber(), backMenu));
     }

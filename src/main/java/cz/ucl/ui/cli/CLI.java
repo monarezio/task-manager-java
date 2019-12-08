@@ -2,8 +2,6 @@ package cz.ucl.ui.cli;
 
 import cz.ucl.logic.IAppLogic;
 import cz.ucl.logic.app.entities.definition.Color;
-import cz.ucl.logic.app.entities.definition.ICategory;
-import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.exceptions.*;
 import cz.ucl.ui.cli.forms.FormManager;
 import cz.ucl.ui.cli.menu.MenuFactory;
@@ -20,7 +18,6 @@ import cz.ucl.ui.definition.views.*;
 
 import java.io.Console;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -35,6 +32,8 @@ public class CLI implements ICLI {
     private ITaskView taskView;
     private IMenuView menuView;
     private IFormView formView;
+    private final ITaskFilterView taskFilterView;
+    private final IUserSettingsView userSettingsView;
 
     public CLI() {
         menuFactory = new MenuFactory();
@@ -44,6 +43,8 @@ public class CLI implements ICLI {
         taskView = new TaskView();
         menuView = new MenuView();
         formView = new FormView();
+        taskFilterView = new TaskFilterView();
+        userSettingsView = new UserSettingsView();
     }
 
     @Override
@@ -122,6 +123,12 @@ public class CLI implements ICLI {
             actionAddTask(fromMenu, formData);
         } else if (fromMenu.getIdentifier().equals("task_search_filter")) {
             actionFilterFullTextSearch(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("user_setting_update")) {
+            actionEditUser(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("user_setting_update_password")) {
+            actionEditUserPassword(fromMenu, formData);
+        } else if (fromMenu.getIdentifier().equals("delete_user")) {
+            actionDestroyUser(fromMenu, formData);
         } else try {
             actionEditTask(fromMenu, formData);
         } catch (Exception e) {
@@ -227,6 +234,30 @@ public class CLI implements ICLI {
     private void actionFilterFullTextSearch(IMenu menu, Map<String, String> data) {
         TaskSearchFilterMenu tsfm = (TaskSearchFilterMenu) menu;
         tsfm.getTaskFilter().setSearchKeyword(data.get("search"));
+    }
+
+    private void actionEditUser(IMenu menu, Map<String, String> data) {
+        try {
+            logic.updateUser(data.get("username"), data.get("email"));
+        } catch (EmailAddressAlreadyUsedException e) {
+            drawError(e.getMessage());
+        } catch (InvalidPropertyException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void actionEditUserPassword(IMenu menu, Map<String, String> data) {
+        logic.updatePassword(data.get("password"));
+    }
+
+    private void actionDestroyUser(IMenu menu, Map<String, String> data) {
+        if (Boolean.parseBoolean(data.get("is_sure"))) {
+            try {
+                logic.destroyUserLoggedIn();
+            } catch (NotLoggedInException e) {
+                drawError(e.getMessage());
+            }
+        }
     }
 
     // TODO
@@ -393,6 +424,16 @@ public class CLI implements ICLI {
     @Override
     public IMenuView getMenuView() {
         return menuView;
+    }
+
+    @Override
+    public ITaskFilterView getFilterMenuView() {
+        return taskFilterView;
+    }
+
+    @Override
+    public IUserSettingsView getSettingsMenuView() {
+        return userSettingsView;
     }
 }
 

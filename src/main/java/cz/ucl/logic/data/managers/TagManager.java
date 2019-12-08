@@ -4,13 +4,16 @@ import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.data.dao.ColorDAO;
 import cz.ucl.logic.data.dao.TagDAO;
+import cz.ucl.logic.data.dao.TaskDAO;
 import cz.ucl.logic.data.dao.UserDAO;
 import cz.ucl.logic.data.hibernate.definitions.IHibernateSessionFactory;
 import cz.ucl.logic.data.managers.definitions.ITagManager;
 import cz.ucl.logic.data.mappers.definitions.DAOToEntity.ITagDAOToTagMapper;
 import cz.ucl.logic.data.mappers.definitions.entityToDAO.IColorToColorDAOMapper;
 import cz.ucl.logic.exceptions.InvalidColorException;
+import cz.ucl.logic.exceptions.TagInUseException;
 
+import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +75,17 @@ public class TagManager implements ITagManager {
     }
 
     @Override
-    public void destroyTag(long id) {
-        hibernateSessionFactory.createSession(s -> s.delete(new TagDAO(id)));
+    public void destroyTag(long userId, long id) throws TagInUseException {
+        try {
+            hibernateSessionFactory.createSession(s -> {
+                TagDAO tag = s.createQuery("from TagDAO where id = ?0 AND user_id = ?1", TagDAO.class)
+                        .setParameter(0, id).setParameter(1, userId).getSingleResult();
+
+                s.delete(tag);
+            });
+        } catch(PersistenceException e) {
+            throw new TagInUseException();
+        }
     }
 
     @Override
@@ -91,9 +103,10 @@ public class TagManager implements ITagManager {
     }
 
     @Override
-    public void updateTag(long id, String title, Color color) {
+    public void updateTag(long userId, long id, String title, Color color) {
         hibernateSessionFactory.createSession(s -> {
-            TagDAO tag = s.get(TagDAO.class, id);
+            TagDAO tag = s.createQuery("from TagDAO where id = ?0 AND user_id = ?1", TagDAO.class)
+                    .setParameter(0, id).setParameter(1, userId).getSingleResult();
             tag.setColor(colorToColorDAOMapper.mapOrNull(color));
             tag.setTitle(title);
             tag.setUpdated(LocalDateTime.now());

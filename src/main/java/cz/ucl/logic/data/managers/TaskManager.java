@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class TaskManager implements ITaskManager {
 
-    private final int perPage = 30; // TODO: Change later
+    private final int perPage = 2; // TODO: Change later
 
     private final IHibernateSessionFactory hibernateSessionFactory;
     private final ICategoryToCategoryDAOMapper categoryToCategoryDAO;
@@ -51,24 +51,29 @@ public class TaskManager implements ITaskManager {
     public ITasksCollection getAllByFilter(long userId, ITaskFilter filter) {
         AtomicReference<ITasksCollection> tasksCollection = new AtomicReference<>();
         hibernateSessionFactory.createSession(s -> {
-            StringBuilder queryBuilder = new StringBuilder("from TaskDAO where user_id = :user_id");
+            StringBuilder queryBuilder = new StringBuilder("from TaskDAO t LEFT JOIN t.tags ts where t.user.id = :user_id");
 
-            if (filter.getByCategory() != null)
-                queryBuilder.append(" and category_id = :category_id");
+            if (filter.getByCategory() != null && filter.getByCategory().getId() == -1) //Uncategorized search
+                queryBuilder.append(" and t.category.id is null");
+            else if (filter.getByCategory() != null)
+                queryBuilder.append(" and t.category.id = :category_id");
+
             if (filter.getByTags().length != 0)
-                queryBuilder.append(" and tag_id in :tag_ids");
+                queryBuilder.append(" and ts.id IN (:tag_ids)");
 
             if (filter.getTaskDoneStatus() == TaskDoneStatus.IS_DONE)
-                queryBuilder.append(" and isdone = true");
+                queryBuilder.append(" and t.isDone = true");
             else if (filter.getTaskDoneStatus() == TaskDoneStatus.IS_NOT_DONE)
-                queryBuilder.append(" and isdone = false");
+                queryBuilder.append(" and t.isDone = false");
 
-            queryBuilder.append(" and (title LIKE :search OR note LIKE :search_2)");
+            queryBuilder.append(" and (t.title LIKE :search OR t.note LIKE :search_2)");
 
-            Query countQuery = s.createQuery("select COUNT(*) " + queryBuilder.toString());
+            Query countQuery = s.createQuery("select COUNT(DISTINCT t.id) " + queryBuilder.toString());
             int amountOfPages = ((int) ((Long) setParams(countQuery, userId, filter).uniqueResult() / perPage)) + 1;
 
-            Query<TaskDAO> query = s.createQuery(queryBuilder.toString(), TaskDAO.class);
+            queryBuilder.append(getCorrectOrderQuery(filter.getOrder()));
+
+            Query<TaskDAO> query = s.createQuery("select t " + queryBuilder.toString(), TaskDAO.class);
             query = setParams(query, userId, filter)
                     .setFirstResult((filter.getPage() - 1) * filter.getPage())
                     .setMaxResults(perPage);
@@ -153,25 +158,25 @@ public class TaskManager implements ITaskManager {
     }
 
     private String getCorrectOrderQuery(TasksOrder order) {
-        String start = "order by isdone";
+        String start = " order by t.isDone";
 
         switch (order) {
             case BY_DEADLINE_AT_ASC:
-                return start + ", deadline ASC";
+                return start + ", t.deadline ASC nulls last";
             case BY_DEADLINE_AT_DESC:
-                return start + ", deadline DESC";
+                return start + ", t.deadline DESC nulls last";
             case BY_UPDATED_AT_DESC:
-                return start + ", updated DESC";
+                return start + ", t.updated DESC";
             case BY_UPDATED_AT_ASC:
-                return start + ", updated ASC";
+                return start + ", t.updated ASC";
             case BY_CREATED_AT_ASC:
-                return start + ", created ASC";
+                return start + ", t.created ASC";
             case BY_CREATED_AT_DESC:
-                return start + ", created DESC";
+                return start + ", t.created DESC";
             case BY_TITLE_ASC:
-                return start + ", title ASC";
+                return start + ", t.title ASC";
             case BY_TITLE_DESC:
-                return start + ", title DESC";
+                return start + ", t.title DESC";
         }
 
         return start;
@@ -180,10 +185,10 @@ public class TaskManager implements ITaskManager {
     private Query setParams(Query query, long userId, ITaskFilter filter) {
         query.setParameter("user_id", userId);
 
-        if (filter.getByCategory() != null)
+        if (filter.getByCategory() != null && filter.getByCategory().getId() != -1)
             query.setParameter("category_id", filter.getByCategory().getId());
         if (filter.getByTags().length != 0)
-            query.setParameter("tag_ids", Arrays.stream(filter.getByTags()).mapToInt(i -> (int) i.getId()));
+            query.setParameterList("tag_ids", Arrays.stream(filter.getByTags()).map(ITag::getId).collect(Collectors.toList()));
 
         query.setParameter("search", "%" + filter.getSearchKeyword() + "%");
         query.setParameter("search_2", "%" + filter.getSearchKeyword() + "%");

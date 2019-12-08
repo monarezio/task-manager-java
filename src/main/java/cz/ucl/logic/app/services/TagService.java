@@ -6,6 +6,7 @@ import cz.ucl.logic.app.services.definition.ITagService;
 import cz.ucl.logic.app.services.definition.IUserService;
 import cz.ucl.logic.data.managers.definitions.ITagManager;
 import cz.ucl.logic.exceptions.InvalidColorException;
+import cz.ucl.logic.exceptions.TagInUseException;
 
 public class TagService implements ITagService {
 
@@ -39,11 +40,11 @@ public class TagService implements ITagService {
 
     @Override
     public void updateTag(int id, String title, Color color) {
-        tagManager.updateTag(id, title, color);
+        tagManager.updateTag(userService.getUserLoggedIn().getId(), id, title, color);
     }
 
     @Override
-    public void destroyTag(int id) {
-        tagManager.destroyTag(id);
+    public void destroyTag(int id) throws TagInUseException {
+        tagManager.destroyTag(userService.getUserLoggedIn().getId(), id);
     }
 }

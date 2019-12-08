@@ -3,6 +3,7 @@ package cz.ucl.logic.app.services.definition;
 import cz.ucl.logic.app.entities.definition.Color;
 import cz.ucl.logic.app.entities.definition.ITag;
 import cz.ucl.logic.exceptions.InvalidColorException;
+import cz.ucl.logic.exceptions.TagInUseException;
 
 /**
  * This interface describes a class which should contain all application logic related to tags
@@ -25,5 +26,5 @@ public interface ITagService {
     void updateTag(int id, String title, Color color);
 
     /** Finds a tag by its ID and destroys it */
-    void destroyTag(int id);
+    void destroyTag(int id) throws TagInUseException;
 }

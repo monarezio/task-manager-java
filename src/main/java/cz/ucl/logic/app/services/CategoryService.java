@@ -39,11 +39,11 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void updateCategory(int id, String title, Color color) {
-        categoryManager.updateCategory(id, title, color);
+        categoryManager.updateCategory(userService.getUserLoggedIn().getId(), id, title, color);
     }
 
     @Override
     public void destroyCategory(int id) {
-        categoryManager.destroyCategory(id);
+        categoryManager.destroyCategory(userService.getUserLoggedIn().getId(), id);
     }
 }

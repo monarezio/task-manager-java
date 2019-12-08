@@ -19,7 +19,7 @@ public class TagDetailMenu extends Menu {
         ITag tag = logic.getTagById(taskId);
         setDescription(ui.getTagView().formatTag(tag));
 
-        IMenu editMenu = ui.getMenuFactory().createEditTaskCategoryMenu(this, taskId);
+        IMenu editMenu = ui.getMenuFactory().createEditTagMenu(this, taskId);
         addOption(new MenuOption(nextOptionNumber(), editMenu));
 
         IMenu deleteMenu = ui.getMenuFactory().createDeleteTagMenu(this, taskId);
